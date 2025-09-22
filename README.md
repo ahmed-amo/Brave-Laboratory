@@ -128,4 +128,4 @@ We are committed to continuously improving Brave Lab and providing an exceptiona
 
 ## Contact
 
-If you have any questions or inquiries, feel free to contact me at adembendjama22@gmail.com
+If you have any questions or inquiries, feel free to contact me at amokrane.ahmed10@gmail.com
