@@ -1,0 +1,281 @@
+{% extends 'main_home/actors_base.html' %}
+{% load static %}
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+<link rel="stylesheet" href="{% static 'css/lists/ap_list.css' %}">
+
+{% endblock css_2 %}
+
+{% block main %}
+<div class="Container">
+  <div class="header ">
+    <div class="search">
+        <form class="search-bar" method="post" >
+            {% csrf_token %}
+            <button type="submit" name="search">
+                <span class="material-icons search-icon">
+                    search
+                    </span>
+            </button>
+            <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+            
+        </form>
+    </div>
+
+
+    <div class="header ">
+        <div class="search">
+           
+        </div>
+        <div class="nurse">
+        <a href="{% url "client" %}?state=booked">
+            <button class="list-button filter">
+                <span>Booked</span>
+                <span class="material-icons">filter_list</span>
+            </button>
+        </a>
+        <a href="{% url "client" %}?state=performed">
+                <button class="list-button filter">
+                <span>Performed</span>
+                <span class="material-icons">filter_list</span>
+            </button>
+        </a>
+        <a href="{% url "client" %}?state=canceled">
+                <button class="list-button filter">
+                <span>Canceled</span>
+                <span class="material-icons">filter_list</span>
+            </button>
+        </a>
+            
+        </div>
+        
+    </div>
+
+
+
+    <div class="nurse">
+        <a href="{% url "client" %}?date={{sort_date}}&state={{state}}">
+            <button class="list-button filter">
+                <span>Date</span>
+                <span class="material-icons">sort</span>
+            </button>
+        </a>
+        
+    </div>
+    
+</div>
+
+
+
+
+
+
+    {% if booked_appointments is not None %}
+    {% if booked_appointments %}
+    <div class="userlistcl">
+            <div class="infoheadercl">
+                <h3>Booked Appointments</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    {% for appointment in booked_appointments %}
+                    {% if not appointment.performed %}
+                    <li class="app1">
+                        <span><strong>Appointment #{{ appointment.id }}</strong></span>
+                        <span><strong>{{ appointment.date }}</strong></span>
+                        <div class="buttons">
+                            <button class="list-button cancel-button">Cancel</button>
+                            <button class="list-button"><a class="list-links"
+                                    href="{% url 'client_appointment_detail' appointment.id %}">View Details</a></button>
+                        </div>
+                        <form class="cancel-form" action="{% url 'client_cancel_appointment' appointment.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Cancel Appointment</button>
+                        </form>
+                    </li>
+                    {%endif%}
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+        </div> 
+    </div> 
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Booked Appointments</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Booked Appointments Found</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+
+    {% if performed_appointments is not None %}
+    {% if performed_appointments %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Performed Appointments</h3>
+        </div>    
+
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+
+                <ul class="lists">
+                    {% for appointment in performed_appointments %}
+                    <li class="app1">
+                        <span><strong>Appointment #{{ appointment.id }}</strong></span>
+                        <span><strong>{{ appointment.date }}</strong></span>
+                        <div class="buttons">
+                            <button class="list-button"><a class="list-links"
+                                    href="{% url 'client_appointment_detail' appointment.id %}">View Details</a></button>
+                        </div>
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Performed Appointments</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Performed Appointments Found</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+    {% if canceled_appointments is not None %}
+    {% if canceled_appointments %}
+    <div class="userlistcl">
+            <div class="infoheadercl">
+                <h3>Canceled Appointments</h3>
+            </div>   
+
+            <div class="userscontianercl">
+                <div class= "scrollcl">
+                    <ul class="lists">
+                        {% for appointment in canceled_appointments %}
+                        <li class="app1">
+                            <span><strong>Appointment #{{ appointment.id }}</strong></span>
+                            <span><strong>{{ appointment.date }}</strong></span>
+                            <div class="buttons">
+                                <button class="list-button"><a class="list-links"
+                                        href="{% url 'client_appointment_detail' appointment.id %}">View Details</a></button>
+                            </div>
+                        </li>
+                        {% endfor %}
+
+                    </ul>
+            </div>
+        </div> 
+    </div> 
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Cancelled Appointments</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Cancelled Appointments Found</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+
+
+</div>
+</div>
+
+{% endblock main %}
+
+{% block sidebar %}
+
+<li><a href={% url 'client' %}><span class="material-icons X">layers</span><span class="nav-item">Home</span></a></li>
+<li><a href={% url 'client_appointment_book' %}><span class="material-icons X">event</span><span class="nav-item">Book
+            Appointment</span></a></li>
+<li><a href={% url 'client_result_list' %}><span class="material-icons X">list</span><span
+            class="nav-item">Results</span></a></li>
+<li><a href={% url 'client_request_list' %}><span class="material-icons X">track_changes</span><span
+            class="nav-item">Track Progress</span></a></li>
+<li><a href={% url 'create_complaint' %}><span class="material-icons X">feedback</span><span class="nav-item">Send
+            Complaint</span></a></li>
+
+{% endblock sidebar %}
+
+
+{% block scripts_2 %}
+<script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+<script>
+{% if messages %}
+    {% for message in messages %}
+            Swal.fire({
+                title: {% if message.tags == 'success' %}'Success!'{% else %}'Error!'{% endif %},
+                text: '{{ message }}',
+                icon: {% if message.tags == 'success' %}'success'{% else %}'error'{% endif %},
+                confirmButtonText: 'Confirm'
+            });
+    {% endfor %}
+{% endif %}
+</script>
+
+
+
+<script>
+    var path = window.location.pathname;
+    var links = document.querySelectorAll('nav ul li a');
+
+    links.forEach(function (link) {
+        var href = link.getAttribute('href');
+
+        // Check if the current path starts with the href
+        if (path.startsWith(href)) {
+            // Add the "booked" class to the parent <li> element
+            link.parentElement.classList.add('active');
+        }
+    });
+</script>
+
+<script src="{% static 'js/resources/jquery-3.1.1.min.js'%}"></script>
+<script>
+    $(document).ready(function () {
+        $('.cancel-button').click(function () {
+            $(this).closest('.app1').find('.cancel-form').submit();
+        });
+    });
+</script>
+{% endblock scripts_2 %}

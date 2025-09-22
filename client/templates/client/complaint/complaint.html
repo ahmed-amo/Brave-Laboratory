@@ -1,0 +1,89 @@
+{% extends 'client/client.html' %}
+{% load static %}
+{% block main %}
+<style>
+  .Container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    border: 3px solid #00748c50;
+    border-radius: 10px;
+    background-color: #fff;
+    animation: fade-in 1s ease-out;
+  }
+
+  .Container h1 {
+    color: #111;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .Container form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .Container label {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .Container select,
+  .Container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+  }
+
+  .Container textarea {
+    width: 98%;
+  }
+
+
+
+  .Container button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+
+  .Container button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+  <div class="Container">
+    <h1>Submit a Complaint</h1>
+    <form method="POST">
+      {% csrf_token %}
+        <label for="id_topic">Topic:</label>
+        <select name="topic" id="id_topic">
+          <option value="Billing">Billing</option>
+
+          <option value="Customer Service">Customer Service</option>
+
+          <option value="Facilities">Facilities</option>
+
+          <option value="Quality of Service">Quality of Service</option>
+
+          <option value="Other">Other</option>
+        </select>
+
+        <label for="id_description">Description:</label>
+        <textarea name="description" cols="40" rows="4" required id="id_description"></textarea>
+  
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+{% endblock %}

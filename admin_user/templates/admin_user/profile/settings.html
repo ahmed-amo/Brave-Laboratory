@@ -1,0 +1,75 @@
+{% extends 'admin_user/admin_user.html' %}
+{% load static %}
+
+{% block css_2 %}
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}" /> 
+{% endblock css_2 %}
+
+{% block main %}
+    <div class="Container">
+        <div class="settings-section">
+            <h2>Change Password</h2>
+            <form method="POST" class="password-form" >
+                {% csrf_token %}
+                <div class="form-group" >
+                    <label class="label" for="id_old_password">Old password:</label>
+                    <input class="input-field" type="password" name="old_password" autocomplete="current-password" autofocus required id="id_old_password" value="{{old_password}}">
+                    
+                </div>
+            
+                <div class="form-group" id="new-password-fields" style="display:none;">
+                    <label class="label" for="id_new_password1">New password:</label>
+                    <input class="input-field" type="password" name="new_password1" autocomplete="new-password"  id="id_new_password1">
+                    
+                </div>
+            
+                <div class="form-group" id="confirmation-fields" style="display:none;">
+                    <label class="label" for="id_new_password2">Confirmation:</label>
+                    <input class="input-field" type="password" name="new_password2" autocomplete="new-password"  id="id_new_password2">
+                    
+                </div>
+                {% for field in form %}
+                {% if field.errors %}
+                    <div class="form-errors">
+                            {% for error in field.errors %}
+                                <div class="help-block">{{error}}</div>
+                            {% endfor %}
+                        </div>
+                {% endif %}
+                {% endfor %}
+                {% if messages %}
+                {% for message in messages %}
+                    <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+                {% endif %}
+                <button type="submit" class="btn" id="confirm" name="confirm">Confirm</button>
+                <button type="submit" class="btn" id="update"  name="update" style="display:none;">Update Password</button>
+            </form>
+            
+        </div>
+    </div>
+{% endblock main %}
+
+
+{% block scripts_3 %}
+{% if old_pass_correct %}
+<script>
+    var confirm = document.getElementById('confirm');
+    confirm.remove();
+
+    const newPasswordFields = document.getElementById('new-password-fields');
+    const confirmationFields = document.getElementById('confirmation-fields');
+
+    const update = document.getElementById('update');
+    update.removeAttribute('style');
+    newPasswordFields.removeAttribute('style');
+    confirmationFields.removeAttribute('style');
+    newPasswordFields.required = True ;
+    confirmationFields.required = True ;
+
+
+</script>
+{% endif %}
+{% endblock scripts_3 %}

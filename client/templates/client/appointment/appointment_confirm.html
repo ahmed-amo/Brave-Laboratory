@@ -1,0 +1,129 @@
+{% extends 'client/client.html' %}
+{% load static %}
+
+
+{% block main %}
+<style>
+    .Container {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #fff;
+        max-width: 600px;
+        margin: 0 auto;
+        animation: fade-in 0.5s ease;
+    }
+
+    .Container h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #00748c;
+    }
+
+    .Container h3 {
+        margin-top: 30px;
+        color: #333;
+    }
+
+    .Container p {
+        margin-bottom: 10px;
+    }
+
+    .Container img {
+        max-width: 200px;
+        max-height: 200px;
+        display: block;
+        margin: 20px auto;
+        border-radius: 8px;
+    }
+
+    .Container small {
+        font-size: 12px;
+        color: #777;
+    }
+
+    .Container form {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .Container button {
+        padding: 10px 20px;
+        border-radius: 4px;
+        border: none;
+        background-color: #00748c;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .Container button:hover {
+        background-color: #005a6c;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+<div class='Container' id="cont-1">
+    <h1>Book Appointment</h1>
+
+    <h3>Client</h3>
+    <p>{{ user.first_name }} {{ user.last_name }}</p>
+
+    <h3>Date</h3>
+    <p>{{ data.date }}</p>
+
+    <h3>Description</h3>
+    <p>{{ data.description }}</p>
+
+    {% for test in data.tests_requested %}
+    <h3>Test {{ forloop.counter }}</h3>
+    <p>{{ test.name }}</p>
+    {% endfor %}
+
+    <h3>Price of Selected Tests:</h3>
+    <p>{{ data.total_price }}$ USD</p>
+
+    <h3>Price of Appointment Booking</h3>
+    <p>5.00$ USD</p>
+
+    <small>Note: Excluding the Appointment Visit Fees</small>
+
+    <h3>Document</h3>
+    {% if data.document is not None %}
+    <img src="/media/{{ data.document }}" width='200' height="200">
+    {% else %}
+    <p>No Document provided.</p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'client_appointment_confirm' %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="data.date" value="{{ data.date }}">
+        <input type="hidden" name="data.description" value="{{ data.description }}">
+        
+        {% if data.document is not None %}
+        <input type="hidden" name="data.document" value="{{ data.document }}">
+        {% endif %}
+
+        <input type="hidden" name="data.test_count" value="{{ data.tests_requested.count }}">
+        {% for test in data.tests_requested %}
+        <input type="hidden" name="data.tests_requested{{ forloop.counter }}" value="{{ test.id }}">
+        {% endfor %}
+
+        <input type="hidden" name="data.total_price" value="{{ data.total_price }}">
+
+        <button type="submit" name="confirm" id="bookButton">Confirm</button>
+    </form>
+
+</div>
+{% endblock main %}
+
+

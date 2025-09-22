@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #666;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .test {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Results - Invoice #{{ invoice.id }}</h1>
+        <p>Date: {{ invoice.creation_time }}</p>
+        <p>Approved: {% if test_result.approved %}Yes{% else %}No{% endif %}</p>
+        <p>Duration: {{ test_result.duration }}</p>
+        <p>Total Price: {{ invoice.total_price }}</p>
+
+        <h3>Tests:</h3>
+        {% for test in tests %}
+            <div class="test">
+                <h3>{{ test.test_offered.name }}</h3>
+                <p>Description: {{ test.description }}</p>
+                {% for component in test.components.all %}
+                    <p>{{ component.info.name }}: {{ component.value }} {{ component.info.unit }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <h3>Appointment:</h3>
+        <p>Date: {{ appointment.date }}</p>
+        <p>Time: {{ appointment.time }}</p>
+    </div>
+</body>
+</html>

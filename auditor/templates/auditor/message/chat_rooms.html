@@ -1,0 +1,44 @@
+{% extends 'auditor/auditor.html' %}
+{% load static %}
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+<link rel="stylesheet" href="{% static 'css/lists/chat_aud_list.css' %}">
+<style>
+    .userscontianercl{
+        height: 70vh;
+    }
+    .scrollcl{
+        height: 65vh;
+    }
+    .userlistcl{
+        margin-top: 25px;
+    }
+</style>
+{% endblock css_2 %}
+{% block main %}
+<div class="Container">
+    <h1></h1>
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Chat Rooms</h3>
+        </div>   
+
+    <div class="userscontianercl">
+        <div class= "scrollcl">
+    <ul>
+        {% for chat_room in chat_rooms %}
+            <li class="app1">
+                <span><strong>Chat Room ID: {{ chat_room.id }}</strong></span>
+                <span><strong>Nurse: {{ chat_room.nurse.user.first_name }} {{ chat_room.nurse.user.last_name }}</strong></span>
+                <div class="buttons">
+                    <button class="list-button"><a class="list-links" href="{% url 'message_chat' room_id=chat_room.id %}">Join Chat Room</a></button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</div> 
+</div>
+</div>
+{% endblock main %}

@@ -1,0 +1,70 @@
+{% extends 'auditor/auditor.html' %}
+{% load static %}
+
+{% block css_2 %}
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+<script src="{%static 'js/resources/jquery-3.1.1.min.js'%}"></script>
+{% endblock css_2 %}
+
+{% block main %}
+<div class="Container">
+
+       <div class="chat-container">
+
+        <div class="user-profile">
+            <div class="profile-image">
+                <img src="{{ room.nurse.profile_pic.url }}" alt="User Profile Image">
+            </div>
+            <div class="profile-username">
+                {{ room.nurse.user.first_name }}
+                {{ room.nurse.user.last_name }}
+            </div>
+        </div>
+
+        <div class="chat-box">
+            <div class="chat-messages" id="chat-messages">
+                <ul class="message-list" id="message-list">
+                </ul>
+              </div>
+      
+              
+              <form id="post-form" class="chat-input">
+                  {% csrf_token %}
+                  <input type="hidden" name="room_id" id="room_id" value="{{ room_id }}"/>
+                  
+                  <textarea class="message-input" name="message" id="message" placeholder="Type your message..."></textarea>
+                  <button type="submit" class="send-button">Send</button>
+                 
+              </form>
+        </div>
+    </div>
+
+    <script>
+        var room_id = "{{room_id}}"
+    </script>
+    <script src="{% static 'js/chat_auditor.js' %}">
+    </script>
+
+</div>
+
+{% endblock main %}
+
+
+
+{% block scripts_2 %}
+
+<script>
+    var path = window.location.pathname;
+    var links = document.querySelectorAll('nav ul li a');
+
+    links.forEach(function (link) {
+        var href = link.getAttribute('href');
+
+        // Check if the current path starts with the href
+        if (path.startsWith(href)) {
+            // Add the "active" class to the parent <li> element
+            link.parentElement.classList.add('active');
+        }
+    });
+</script>
+{% endblock scripts_2 %}

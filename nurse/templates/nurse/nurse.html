@@ -1,0 +1,119 @@
+{% extends 'main_home/actors_base.html' %}
+{% load static %}
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+{% endblock css_2 %}
+{% block main %}
+<div class="Container">
+		
+    <div class="header ">
+        <div class="search">
+        </div>
+            <div class="nurse">
+                <a href="{% url "nurse" %}?urgency={{sort_urgency}}">
+                    <button class="list-button filter">
+                        <span>Urgency</span>
+                        <span class="material-icons">sort</span>
+                    </button>
+                </a>
+            </div>
+    </div>
+
+    {% if clients %}
+    <div class="userlist">
+
+        <div class="infoheader">
+            <h3>Client Lobby</h3>
+        </div>
+
+        <div class="userscontianer">
+            <div class="scroll">
+                {% for client in clients %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ client.id }}</strong></span>
+                    <span><strong>{{ client.client.user.first_name }} {{ client.client.user.last_name }}</strong></span>
+                    <span><strong>
+                            {% if client.urgent %}
+                            Urgent
+                            {% else %}
+                            Normal
+                            {% endif %}
+                        </strong></span>
+                    <div class="buttons">
+                        <button class="list-button"><a class="list-links" href="{% url 'lobby_detail' client.id %}">View
+                                Details</a></button>
+                    </div>
+                </li>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+    <div class="userlist">
+
+        <div class="infoheader">
+            <h3>Client Lobby</h3>
+        </div>
+
+        <div class="userscontianer">
+            <div class="scroll">
+                <li class="app1">
+                    <span><strong>No Clients Waiting in the Lobby</strong></span>
+                </li>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+    
+</div>
+
+{% endblock main %}
+
+
+
+{% block sidebar %}
+
+    <li><a  href={% url 'nurse' %}><span class="material-icons X">layers</span> <span class="nav-item">Home</span></a></li>
+    <li><a href={% url 'nurse_message_chat' %}><span class="material-icons X">chat</span><span class="nav-item">Messages</span></a></li>
+    <li><a href={% url 'request_list' %}><span class="material-icons X">list_alt</span><span class="nav-item">Requests List</span></a></li>
+    <li><a href={% url 'blood_add' %}><span class="material-icons X">opacity</span><span class="nav-item">Add Blood Sample</span></a></li>
+    {% comment %} <li><a><span class="material-icons X">list</span><span class="nav-item">Generate Result</span></a></li> {% endcomment %}
+
+{% endblock sidebar %}
+
+{% block scripts_2 %}
+
+<script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            Swal.fire({
+                title: {% if message.tags == 'success' %}'Success!'{% else %}'Error!'{% endif %},
+                text: '{{ message }}',
+                icon: {% if message.tags == 'success' %}'success'{% else %}'error'{% endif %},
+                confirmButtonText: 'Confirm'
+            });
+        </script>
+    {% endfor %}
+{% endif %}
+
+    <script>
+        var path = window.location.pathname;
+        var links = document.querySelectorAll('nav ul li a');
+    
+        links.forEach(function(link) {
+        var href = link.getAttribute('href');
+    
+        // Check if the current path starts with the href
+        if (path.startsWith(href)) {
+            // Add the "active" class to the parent <li> element
+            link.parentElement.classList.add('active');
+        }
+        });
+    </script>
+{% endblock scripts_2 %}

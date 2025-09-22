@@ -1,0 +1,85 @@
+{% extends 'admin_user/admin_user.html' %}
+{% load static %}
+
+{% block css_3 %}
+<style>
+    .Container{
+        width:60%;
+        border: 1px solid lightgray;
+        padding:30px 0 ;
+    }
+  .button-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 5px;
+    
+  }
+
+  .button {
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #00748c;
+    transition: background-color 0.3s;
+    border-radius: 4px;
+  }
+
+  .button:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  .button:hover {
+    background-color: #005c70;
+  }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="Container">
+  <div class="button-container">
+    <a href="{% url 'account_add_nurse' %}" class="button">Add Nurse</a>
+    <a href="{% url 'account_add_receptionist' %}" class="button">Add Receptionist</a>
+    <a href="{% url 'account_add_auditor' %}" class="button">Add Auditor</a>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{% block scripts_2 %}
+<script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+{% if messages %}
+{% for message in messages %}
+<script>
+    Swal.fire({
+        title: 'Added !',
+        text: '{{ message }}',
+        icon: 'success',
+        confirmButtonText: 'Confirm'
+    })
+</script>
+{% endfor %}
+{% endif %}
+
+<script>
+    var path = window.location.pathname;
+    var links = document.querySelectorAll('nav ul li a');
+
+    links.forEach(function (link) {
+        var href = link.getAttribute('href');
+
+        // Check if the current path starts with the href
+        if (path.startsWith(href)) {
+            // Add the "active" class to the parent <li> element
+            link.parentElement.classList.add('active');
+        }
+    });
+</script>
+{% endblock scripts_2 %}

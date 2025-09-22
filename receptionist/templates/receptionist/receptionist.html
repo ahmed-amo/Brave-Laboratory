@@ -1,0 +1,148 @@
+{% extends 'main_home/actors_base.html' %}
+{% load static %}
+
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+{% endblock css_2 %}
+
+{% block main %}
+<div class="Container">
+   
+
+    <div class="header ">
+
+        <div class="search">
+
+            <form class="search-bar" method="post" >
+
+                {% csrf_token %}
+
+                <button type="submit" name="search">
+                    <span class="material-icons search-icon">
+                        search
+                        </span>
+                </button>
+
+                <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+                
+            </form>
+        </div>
+
+
+        <div class="nurse">
+
+
+            <a href="{% url "receptionist" %}?date={{sort_date}}&client={{sort_client}}&date_sort=True">
+                <button class="list-button filter">
+                    <span>Date</span>
+                    <span class="material-icons">sort</span>
+                </button>
+            </a>
+
+
+            <a href="{% url "receptionist" %}?date={{sort_date}}&client={{sort_client}}&client_sort=True">
+            <button class="list-button filter">
+                <span>Client</span>
+                <span class="material-icons">sort</span>
+            </button>
+            </a>
+
+        </div>
+        
+    </div>
+
+
+
+    <ul>
+    {% if reports %}
+    <div class="userlist">
+            <div class="infoheader">
+                <h3>List of Reports</h3>
+            </div>     
+        <div class="userscontianer">
+          <div class= "scroll">
+                <ul>
+                    {% for report in reports %}
+                        <li class="app1">
+                            <span><strong>Appointment #{{ report.test_result.request.appointment.id }}</strong></span>
+                            <span><strong>Client: {{ report.invoice.client.user.username }}</strong></span>
+                            <span><strong>{{ report.creation_time }}</strong></span>
+                            <div class="buttons">
+                                <button class="list-button"><a class="list-links" href="{% url 'receptionist_report_detail' report.id  %}">View Details</a></button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div> 
+    </div>    
+    {% else %}
+        <div class="userlist">
+            <div class="infoheader">
+                <h3>List of Reports</h3>
+            </div>     
+        <div class="userscontianer">
+          <div class= "scroll">
+                <ul>
+                    {% for report in reports %}
+                        <li class="app1">
+                            <span><strong></strong></span>
+                            <span><strong>No Reports Found</strong></span>
+                            <span><strong></strong></span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div> 
+    </div>    
+        
+        {% endif %}
+    </ul>
+
+</div>
+{% endblock main %}
+
+
+{% block sidebar %}
+
+    <li><a href={% url 'receptionist' %}><span class="material-icons X">layers</span> <span class="nav-item">Home</span></a></li>
+    <li><a href={% url 'appointment_list' %}><span class="material-icons X">list_alt</span><span class="nav-item">Appointment List</span></a></li>
+    <li><a href={% url 'complaint_list' %}><span class="material-icons X">list</span><span class="nav-item">Complaint list</span></a></li>
+    <li><a href={% url 'client_add' %}><span class="material-icons X">person_add</span><span class="nav-item">Create Client</span></a></li>
+    <li><a href={% url 'appointment_add' %}><span class="material-icons X">today</span><span class="nav-item">Book Appointment</span></a></li>
+
+{% endblock sidebar %}
+
+{% block scripts_2 %}
+<script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+<script>
+{% if messages %}
+    {% for message in messages %}
+            Swal.fire({
+                title: {% if message.tags == 'success' %}'Success!'{% else %}'Error!'{% endif %},
+                text: '{{ message }}',
+                icon: {% if message.tags == 'success' %}'success'{% else %}'error'{% endif %},
+                confirmButtonText: 'Confirm'
+            });
+    {% endfor %}
+{% endif %}
+</script>
+
+<script>
+    var path = window.location.pathname;
+    var links = document.querySelectorAll('nav ul li a');
+  
+    links.forEach(function(link) {
+      var href = link.getAttribute('href');
+  
+      // Check if the current path starts with the href
+      if (path.startsWith(href)) {
+          // Add the "active" class to the parent <li> element
+          link.parentElement.classList.add('active');
+      }
+    });
+</script>
+{% endblock scripts_2 %}

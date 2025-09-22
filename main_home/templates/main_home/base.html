@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/resources/fonts.css' %}">
+    <title>Brave Laboratory</title>
+    
+
+    {% block css %}{% endblock css %}
+    {% block css_2 %}{% endblock css_2 %}
+    {% block css_3 %}{% endblock css_3 %}
+
+</head>
+<body>
+    
+    {% block header %}
+    <section class="header">
+        <nav>
+            <a href="{% url 'home' %}"><img alt="Brave Lab Logo" src="{% static 'img/download.png' %}"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="{% url 'home' %}">HOME</a></li>
+                    <li><a href="#about">ABOUT</a></li>
+                    <li><a href="#service">SERVICES</a></li>
+                    <li><a href="#footer">CONTACT</a></li>
+                    <li><a href="{% url 'login' %}">SIGN IN</a></li>
+                </ul>
+            </div>
+        </nav>
+    {% endblock header %}
+
+    {% block content %}{% endblock content %}
+
+    {% block scripts %}{% endblock scripts %}
+    {% block scripts_2 %}{% endblock scripts_2 %}
+    {% block scripts_3 %}{% endblock scripts_3 %}
+</body>
+</html>

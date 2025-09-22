@@ -1,0 +1,90 @@
+.Container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    border: 3px solid #00748c50;
+    border-radius: 10px;
+    background-color: #fff;
+    animation: fade-in 0.5s ease-out;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Container .left-section {
+    flex-basis: 50%;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+}
+
+.Container .right-section {
+    flex-basis: 50%;
+}
+
+.Container h1 {
+    color: #111;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.Container h3 {
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.Container p {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.Container ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 0;
+}
+
+.Container li {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.Container img {
+    max-width: 100%;
+    height: auto;
+    border: 3px solid #00748c50;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.Container .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.Container .button:hover {
+    background-color: #0056b3;
+}
+
+.Container .tests {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    padding: 0;
+}

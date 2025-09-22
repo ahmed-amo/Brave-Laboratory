@@ -1,0 +1,457 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #fff;
+    overflow-y: scroll;
+}
+
+
+ul {
+    list-style-type: none;
+  }
+
+.container {
+    text-align: center;
+    float: right;
+    width: 100%;
+    height: 90vh;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    width: 84vw;
+    height: 11vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15); */
+}
+
+.Main {
+    display: flex;
+    justify-content: center;
+    margin-top: 9.5vh;
+    margin-left: 16vw;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+}
+
+.Container {
+    font-size: 16px;
+    width:100%;
+    height: 100%;
+    margin: 0 20px;
+    border-radius: 20px;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.wlc {
+    margin-left: 100px;
+}
+
+.wlc h1 {
+    font-size: 1.2rem;
+}
+
+.wlc p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    gap: 10px;
+}
+
+.Left {
+    float: right;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+    margin-right: 15px;
+}
+
+.DROPS {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 50px;
+}
+
+.DROPS a {
+    width: auto;
+    height: auto;
+    padding: 50px;
+    text-decoration: none;
+    color: black;
+    padding: 1px;
+    
+}
+
+.DROPS li {
+    padding: 20px;
+    list-style: none;
+}
+
+.DROPS .profile-header {
+    width: auto;
+    border-radius: 30px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.DROPS li .notifications {
+    font-size: 25px;
+}
+
+.DROPS li ul {
+    top: 9vh;
+    right: 30px;
+    position: absolute;
+    display: none;
+    background-color: #00748c;
+    border-radius: 10px;
+    height: auto;
+    transition: 0.5s;
+    border: 2px solid #00748c50;
+}
+
+.DROPS li ul li {
+    font-size: 15px;
+    padding: 14px 14px 14px 8px;
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 5px;
+    color: white;
+    transition: 0.5s;;
+
+}
+.DROPS li ul li span {
+    padding-left: 7px;
+}
+
+.DROPS li ul li:hover {
+    color: black;
+    cursor: pointer;
+    background-color: white;
+}
+
+
+.nav-header{
+    position: fixed;
+    left: 0;
+    z-index: 1;
+    top: 0;
+    bottom: 89vh;
+    background-color: #00748c  ;
+    width: 16vw;
+    height: 11vh;
+    overflow: hidden;
+    box-shadow: 0px 4px 4px rgb(255, 255, 255);
+}
+
+.nav-header a{
+    position: relative;
+    color: white;
+
+    padding-left: 18px;
+    width: 15vw;
+}
+
+nav {
+    position: fixed;
+    left: 0;
+    z-index: 1;
+    top: 11.2vh;
+    bottom: 0;
+    /*#00748c*/
+    background-color: #00748c;
+    width: 16vw;
+    overflow: hidden;
+}
+
+.logo {
+    display: flex;
+    transition: all 0.5s ease;
+    margin-top: 3.5vh;
+    padding-right: 0 !important;
+    width: 100%;
+    gap: 8px;
+}
+
+.logo span{
+    font-size: 1rem;
+    padding-top: 3px;
+}
+
+.logo img{
+    height: 32px;
+}
+
+
+nav a {
+    position: relative;
+    color: white;
+    display: table;
+    padding-left: 20px;
+    padding-right: 30px;
+    width: 15vw;
+}
+
+
+
+nav .material-icons {
+    position: relative;
+    top: 14px;
+    font-size: 22px !important;
+}
+
+nav ul {
+    margin-top: 40%;
+
+
+}
+
+.nav-item {
+    position: relative;
+    top: 8px;
+    margin-left: 10px;
+}
+
+
+nav ul li {
+    transition: 0.4s;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.end {
+    position: fixed;
+    bottom: 0;
+    transition: 0.4s;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+
+
+nav ul li::after {
+    content: '';
+    display: block;
+    position: relative;
+    left: 0;
+    width: 5px;
+    height: 100%;
+}
+
+nav ul li:hover {
+    cursor: pointer;
+    background-color: white;
+    border-radius: 30px 0px 0px 30px;
+   
+}
+
+nav ul li:hover a {
+    color: black;
+}
+
+
+nav ul .active{
+    background-color: white;
+    border-radius: 30px 0px 0px 30px;
+}
+nav ul .active a{
+    color: black;
+}
+    
+
+
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+
+header h1 {
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+}
+
+.DROPS li ul a:first-child li {
+    margin-top: -24px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+
+}
+
+.DROPS li ul li {
+    margin-bottom: -24px;
+}
+.DROPS li ul a:last-child li {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+nav a {
+    height: 50px;
+}
+
+
+
+/* Search Bar */
+.search {
+    width: 25%;
+    position: relative;
+    display: flex;
+    cursor: pointer;
+}
+
+.search span {
+    font-size: 26px;
+}
+
+.search-bar button {
+    border: none;
+    background: none;
+    color: #8b8ba7;
+    
+}
+
+/* styling of whole input container */
+.search-bar {
+    --timing: 0.3s;
+    --width-of-input: 240px;
+    --height-of-input: 50px;
+    --border-height: 2px;
+    --input-bg: #fff;
+    --border-color: #00748c;
+    --border-radius: 30px;
+    --after-border-radius: 1px;
+    position: relative;
+    width: var(--width-of-input);
+    height: var(--height-of-input);
+    display: flex;
+    align-items: center;
+    padding-inline: 0.8em;
+    border-radius: var(--border-radius);
+    transition: border-radius 0.5s ease;
+    background: var(--input-bg, #fff);
+    background-color: #E4E6EB;
+}
+
+/* styling of Input */
+.search-bar-input {
+    font-size: 1.1rem;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+}
+
+/* styling of animated border */
+.search-bar:before {
+    content: "";
+    position: absolute;
+    background: var(--border-color);
+    transform: scaleX(0);
+    transform-origin: center;
+    width: 100%;
+    height: var(--border-height);
+    left: 0;
+    bottom: 0;
+    border-radius: 1px;
+    transition: transform var(--timing) ease;
+}
+
+/* Hover on Input */
+.search-bar:focus-within {
+    border-radius: var(--after-border-radius);
+}
+
+.search-bar-input:focus {
+    outline: none;
+}
+
+/* here is code of animated border */
+.search-bar:focus-within:before {
+    transform: scale(1);
+}
+
+/* styling of close button */
+/* == you can click the close button to remove text == */
+.reset {
+    border: none;
+    background: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* close button shown when typing */
+.search-bar-input:not(:placeholder-shown)~.reset {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* sizing svg icons */
+.search-bar .search-icon {
+    margin-top: 3px;
+    margin-right: 6px;
+    margin-left: 10px;
+}
+
+
+
+.profile-pic-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    
+}
+.profile-pic-container i{
+    cursor: pointer !important;
+}
+.profile-pic-container span{
+    font-size: 16px !important;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.cancel-form {
+    display: none;
+}
+  
+
+/* Paypal Button */
+#paypal-button-container{
+    width: 250px;
+    margin-left: 410px;
+}

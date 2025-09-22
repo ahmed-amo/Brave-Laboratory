@@ -1,0 +1,163 @@
+{% extends 'admin_user/admin_user.html' %}
+{% load static %}
+{% block css_3 %}
+<link rel="stylesheet" href="{%static 'css/form_create.css'%}">
+{% endblock css_3 %}
+{% block main %}
+
+<div class="Container">
+    <h3>Nurse Creation Form</h3>
+    <div class="formbold-main-wrapper">
+        <div class="formbold-container">
+            <div class="formbold-form-wrapper">
+            <form method='POST'>
+
+                    {% csrf_token %}
+
+                    <div class="username field formbold-mb-5">
+                        <label class="formbold-form-label" for="id_username">Username:</label>
+                        <input class="formbold-form-input" type="text" name="username" placeholder="ahmed" maxlength="150" autofocus required id="id_username">
+                    </div>
+
+                    {% if form.username.errors %}
+                        <div class="login-errors">
+                            {% for error in form.username.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="email field formbold-mb-5">
+                        <label class="formbold-form-label" for="id_email">Email address:</label>
+                        <input class="formbold-form-input" type="email" name="email" placeholder="ahmed.amokrane@gmail.com" maxlength="254" id="id_email">
+                    </div>
+
+                    {% if form.email.errors %}
+                        <div class="login-errors">
+                            {% for error in form.email.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="name formbold-mb-5">
+                        <div class="first-name field mg-b">
+                            <label class="formbold-form-label" for="id_first_name">First name:</label>
+                            <input class="formbold-form-input" type="text" name="first_name" placeholder="John" maxlength="150" id="id_first_name">
+                        </div>
+                        <div class="last-name field">
+                            <label class="formbold-form-label" for="id_last_name">Last name:</label>
+                            <input class="formbold-form-input" type="text" name="last_name" placeholder="Doe" maxlength="150" id="id_last_name">
+                        </div>
+                    </div>
+
+                    {% if form.first_name.errors or form.last_name.errors %}
+                        <div class="login-errors">
+                            {% for error in form.first_name.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                            {% for error in form.last_name.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="number field formbold-mb-5">
+                        <label class="formbold-form-label" for="id_phone_number">Phone number:</label>
+                        <input class="formbold-form-input" type="text" name="phone_number" maxlength="10" placeholder="+213 0000000000" required id="id_phone_number">
+                    </div>
+
+                    {% if form.phone_number.errors %}
+                        <div class="login-errors">
+                            {% for error in form.phone_number.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+
+                </div>
+
+                <div class="formbold-form-wrapper">
+
+                    <div class="gender field formbold-mb-5">
+                        <label class="formbold-form-label" for="id_gender">Gender:</label>
+                        <select class="formbold-form-input select-drop" name="gender" required id="id_gender">
+                            <option value="" selected>Choose Here:</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
+
+                    {% if form.gender.errors %}
+                        <div class="login-errors">
+                            {% for error in form.gender.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="address field formbold-mb-5">
+                        <label class="formbold-form-label" for="id_address">Address:</label>
+                        <input class="formbold-form-input" type="text" name="address" maxlength="50" placeholder="Setif, El Eulma" required id="id_address">
+                    </div>
+
+                    {% if form.address.errors %}
+                        <div class="login-errors">
+                            {% for error in form.address.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="address field formbold-mb-5">
+                        <label class="formbold-form-label" for="id_date_of_birth">Date of birth:</label>
+                        <input class="formbold-form-input" type="date" name="date_of_birth" required id="id_date_of_birth">
+                    </div>
+
+                    {% if form.date_of_birth.errors %}
+                        <div class="login-errors">
+                            {% for error in form.date_of_birth.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="password-container formbold-mb-5">
+                        <div class="password field mg-b">
+                            <label class="formbold-form-label" for="id_password1">Password:</label>
+                            <input class="formbold-form-input" type="password" name="password1" autocomplete="new-password" required id="id_password1"> 
+                        </div>
+                        <div class="password field">
+                            <label class="formbold-form-label" for="id_password2">Password confirmation:</label>
+                            <input class="formbold-form-input" type="password" name="password2" autocomplete="new-password" required id="id_password2">
+                        </div>
+                    </div>
+
+                    {% if form.password1.errors or form.password2.errors %}
+                        <div class="login-errors">
+                            {% for error in form.password1.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                            {% for error in form.password2.errors %}
+                                {{ error }} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.non_field_errors %}
+                        <div class="form-group">
+                            {% for error in form.non_field_errors %}
+                                <p class="error">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <input class="form-button formbold-btn" type="submit" value="Register">
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,51 @@
+{% extends 'nurse/nurse.html' %}
+{% load static %}
+{% block css_3 %}
+
+
+<link rel="stylesheet" href="{%static 'css/button_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/detail_style.css' %}">
+<style>
+    .buttons_tests{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+    }
+    .list_tests{
+        text-align: left;
+    }
+</style>
+{% endblock css_3 %}
+{% block main %}
+<div class="Container">
+		
+    <div class="left-section">
+    <h2>Test Detail</h2>
+    <h3>Test: {{ test.test_offered.name }}</h3>
+    <p><strong>Status:</strong> {% if test.confirmed %}Confirmed{% else %}Not Confirmed{% endif %}</p>
+    <p><strong>Description: </strong>{{ test.description }}</p>
+    
+    <h3>Components:</h3>
+    <ul class="list_tests">
+        {% for component in test.components.all %}
+        <li>{{ component.info.name }} - Value: {{ component.value }}</li>
+        {% endfor %}
+    </ul>
+</div>
+    <div class="right-section">
+    <div class="buttons_tests">
+    {% if not test.confirmed %}
+    <div>
+    <a class="button-link" href="{% url 'request_test_add_component' analysis_request_id=analysis_request.id test_id=test.id %}" > <button class="formbold-btn"> Add Component<button></button> </a>
+    <a class="button-link" href="{% url 'request_test_finalize' analysis_request_id=analysis_request.id test_id=test.id %}" > <button class="formbold-btn"> Finalize Test</button></a>
+    </div>
+    {% else %}
+    <p>Test Is Finalized !</p>
+    {% endif %}
+    <a class="button-link" href="{% url 'request_test_list' analysis_request_id=analysis_request.id %}" > <button class="formbold-btn"> Back to Test List</button></a>
+    </div>
+</div>
+</div>
+
+{% endblock main %}

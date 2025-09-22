@@ -1,0 +1,299 @@
+{% extends 'receptionist/receptionist.html' %}
+{% load static %}
+
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+<link rel="stylesheet" href="{% static 'css/lists/ap_list.css' %}">
+<style>
+    .Container .header{
+        margin: 0.5rem 0.3rem 0.5rem 0;
+    }
+    .search{
+        width: 20%;
+    }
+</style>
+{% endblock css_2 %}
+
+{% block main %}
+<div class="Container">
+    <div class="header">
+        <div class="search">
+            <form class="search-bar" method="post" >
+                {% csrf_token %}
+                <button type="submit" name="search">
+                    <span class="material-icons search-icon">
+                        search
+                        </span>
+                </button>
+                <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+                
+            </form>
+        </div>
+
+
+
+
+
+        <div class="header">
+            <div class="search">
+               
+            </div>
+            <div class="nurse">
+            <a href="{% url "appointment_list" %}?state=today">
+                <button class="list-button filter">
+                    <span>Today</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+            <a href="{% url "appointment_list" %}?state=tomorrow">
+                    <button class="list-button filter">
+                    <span>Tommorow</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+            <a href="{% url "appointment_list" %}?state=upcoming">
+                    <button class="list-button filter">
+                    <span>Upcoming</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+            <a href="{% url "appointment_list" %}?state=paid">
+                    <button class="list-button filter">
+                    <span>Paid</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+                
+            </div>
+            
+        </div>
+
+
+
+
+
+        <div class="nurse">
+            <a href="{% url "appointment_list" %}?date={{sort_date}}&urgency={{sort_urgency}}&date_sort=True&state={{state}}">
+                <button class="list-button filter">
+                    <span>Date</span>
+                    <span class="material-icons">sort</span>
+                </button>
+            </a>
+            <a href="{% url "appointment_list" %}?date={{sort_date}}&urgency={{sort_urgency}}&urgency_sort=True&state={{state}}">
+                <button class="list-button filter">
+                <span>Urgency</span>
+                <span class="material-icons">sort</span>
+            </button>
+        </a>
+            
+        </div>
+        
+    </div>
+    
+    
+
+    {% if appointments_today is not None %}
+    {% if appointments_today %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Appointments Today</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+            <ul class="lists">
+                {% for appointment in appointments_today %}
+                    <li class="app1">
+                        <span><strong>Appointment #{{ appointment.id }}</strong></span>
+                        <span><strong>{{ appointment.date }}</strong></span>
+                        <span><strong>
+                            {% if appointment.urgent %}
+                                Urgent
+                            {% else %}
+                                Normal
+                            {% endif %}
+                        </strong></span>
+                        <div class="buttons">
+                            <button class="list-button"><a class="list-links" href="{% url 'appointment_detail' appointment.id %}">View Details</a></button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            </div>
+        </div> 
+    </div> 
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Appointments Today</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Appointments Today</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+    {% if appointments_tomorrow  is not None %}
+    {% if appointments_tomorrow %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Appointments Tommorow</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+        <ul class="lists">
+            {% for appointment in appointments_tomorrow %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ appointment.id }}</strong></span>
+                    <span><strong>{{ appointment.date }}</strong></span>
+                    <span><strong>
+                        {% if appointment.urgent %}
+                            Urgent
+                        {% else %}
+                            Normal
+                        {% endif %}
+                    </strong></span>
+                    <div class="buttons">
+                        <button class="list-button"><a class="list-links" href="{% url 'appointment_detail' appointment.id %}">View Details</a></button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        </div>
+        </div>
+        </div>
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Appointments Tommorow</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Appointments Tommorow</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+    {% if appointments_upcoming is not None %}
+    {% if appointments_upcoming %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Appointments Upcoming</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+        <ul class="lists">
+            {% for appointment in appointments_upcoming %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ appointment.id }}</strong></span>
+                    <span><strong>{{ appointment.date }}</strong></span>
+                    <span><strong>
+                        {% if appointment.urgent %}
+                            Urgent
+                        {% else %}
+                            Normal
+                        {% endif %}
+                    </strong></span>
+                    <div class="buttons">
+                        <button class="list-button"><a class="list-links" href="{% url 'appointment_detail' appointment.id %}">View Details</a></button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        </div>
+        </div>
+        </div>
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Appointments Upcoming</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Upcoming Appointments</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+
+    {% if paid_appointments is not None %}
+    {% if paid_appointments %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Paid Appointments</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+        <ul class="lists">
+            {% for appointment in paid_appointments %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ appointment.id }}</strong></span>
+                    <span><strong>{{ appointment.date }}</strong></span>
+                    <span><strong>
+                        {% if appointment.urgent %}
+                            Urgent
+                        {% else %}
+                            Normal
+                        {% endif %}
+                    </strong></span>
+                    <div class="buttons">
+                        <button class="list-button"><a class="list-links" href="{% url 'appointment_detail' appointment.id %}">View Details</a></button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        </div>
+        </div>
+        </div>
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Paid Appointments</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Paid Appointments</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+
+</div>
+{% endblock main %}

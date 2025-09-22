@@ -1,0 +1,39 @@
+h1,
+h3 {
+    font-size: 24px;
+    margin-top: 0;
+}
+
+p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.test {
+    margin-bottom: 20px;
+}
+
+.button-container {
+    margin: 10px 0;
+}
+
+.download-button,
+.view-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #17c1c1;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.view-button {
+    background-color: #00748c;
+}
+
+.download-button:hover,
+.view-button:hover {
+    background-color: #00AC00;
+}

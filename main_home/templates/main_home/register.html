@@ -1,0 +1,156 @@
+{% extends 'main_home/login.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    </section>
+
+<div class="signup-Container">
+    
+    <form method='POST'>
+
+        {% csrf_token %}
+
+        <div class="username field">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        
+        {% if form.username.errors %}
+                <div class="login-errors">
+                    {% for error in form.username.errors %}
+                        {{ error }} 
+                    {% endfor %}
+                </div>
+        {% endif %}
+
+        <div class="email field">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+
+        {% if form.email.errors %}
+            <div class="login-errors">
+                {% for error in form.email.errors %}
+                    {{ error }} 
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="name">
+            <div class="first-name field">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </div>
+            <div class="last-name field">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </div>
+        </div>
+
+        {% if form.first_name.errors or form.last_name.errors %}
+            <div class="login-errors">
+                {% for error in form.first_name.errors %}
+                    {{ error }} 
+                {% endfor %}
+                {% for error in form.last_name.errors %}
+                    {{ error }} 
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="number field">
+            {{ form.phone_number.label_tag }}
+            {{ form.phone_number }}
+        </div>
+
+        {% if form.phone_number.errors %}
+            <div class="login-errors">
+                {% for error in form.phone_number.errors %}
+                    {{ error }} 
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="gender field">
+            {{ form.gender.label_tag }}
+            {{ form.gender }}
+        </div>
+
+        {% if form.gender.errors %}
+            <div class="login-errors">
+                {% for error in form.gender.errors %}
+                    {{ error }} 
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <div class="address field">
+            {{ form.address.label_tag }}
+            {{ form.address }}
+        </div>
+
+        {% if form.address.errors %}
+            <div class="login-errors">
+                {% for error in form.address.errors %}
+                    {{ error }} 
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="address field">
+            {{ form.date_of_birth.label_tag }}
+            {{ form.date_of_birth }}
+        </div>
+
+        {% if form.date_of_birth.errors %}
+            <div class="login-errors">
+                {% for error in form.date_of_birth.errors %}
+                    {{ error }} 
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="password-container">
+            <div class="password field">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }} 
+                
+            </div>
+            <div class="password field">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
+        </div>
+
+        {% if form.password1.errors or form.password2.errors %}
+            <div class="login-errors">
+                {% for error in form.password1.errors %}
+                    {{ error }} 
+                {% endfor %}
+                {% for error in form.password2.errors %}
+                    {{ error }} 
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        
+
+        <div class="privacy-policy">
+            {{ form.policy }}
+            <label for = 'id_policy'>I have read and agreed to the <a href="{% url 'policy' %}"target="_blank" class="links small">privacy policy</a> provided
+            </label>
+        </div>
+
+        <input class="login-button" type="submit" value="Register">
+
+    </form>
+
+    <p class="account-redirect">
+        Already have an account?
+        <a href="{% url 'login' %}" class="links small" >Login here</a>
+    
+</div>
+
+{% endblock content %} 

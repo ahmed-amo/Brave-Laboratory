@@ -1,0 +1,66 @@
+{% extends 'nurse/nurse.html' %}
+{% load static %}
+
+{% block css_3 %}
+<link rel="stylesheet" href="{% static 'css/detail_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/button_style.css' %}">
+
+<style>
+    .formbold-btn{
+        margin: 10px 0;
+    }
+</style>
+{% endblock css_3 %}
+
+{% block main %}
+<div class="Container">
+    <div class="left-section">
+    <h2>Analysis Request Detail</h2>
+
+    <h3>Request ID: {{ analysis_request.id }}</h3>
+
+    <p>Date of Creation: {{ analysis_request.creation_time }}</p>
+    <p>Client: {{ analysis_request.appointment.client.user.first_name }} {{ analysis_request.appointment.client.user.last_name }}</p>
+    <p>Blood Type: {{ analysis_request.appointment.client.blood_type }}</p>
+    <!-- Display other client information as needed -->
+
+    <p>Duration: {{ analysis_request.duration }}</p>
+
+    <h3>Requested Tests</h3>
+    <ul class="tests">
+        {% for test in analysis_request.appointment.tests_requested.all %}
+        <li><strong>-{{ test }}</strong></li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="right-section">
+    {% if analysis_request.appointment.document %}
+    <p>Document:
+    </p>
+    <a href="{{ analysis_request.appointment.document.url }}" target="_blank">
+        <img src="{{ analysis_request.appointment.document.url }}" width="200">
+    </a>
+    {% else %}
+    <p>No document provided.</p>
+    {% endif %}
+
+    <p>Status: {{ analysis_request.get_status_display }}</p>
+
+    {% if not analysis_request.start_time %}
+    <form method="POST" action="{% url 'start_analysis' analysis_request.id %}">
+        {% csrf_token %}
+        <button type="submit" class="formbold-btn">Start</button>
+    </form>
+    {% else %}
+    <a href="{% url 'request_test_list' analysis_request_id=analysis_request.id %}" ><button class="formbold-btn"> View Tests</button></a>
+    {% endif %}
+
+    {% if analysis_request.all_tests_confirmed and not analysis_request.status == "finished" and analysis_request.tests.count != 0%}
+    <form method="POST" action="{% url 'finish_analysis' analysis_request.id %}">
+        {% csrf_token %}
+        <button type="submit" class="formbold-btn">Mark Request as Finished</button>
+    </form>
+    {% endif %}
+</div>
+</div>
+{% endblock main %}

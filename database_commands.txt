@@ -1,0 +1,14 @@
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser --username admin --email admin@example.com
+python manage.py shell < group_permission_setup.py
+python manage.py shell < insert_default_data.py
+python manage.py shell < insert_test_data.py
+
+
+
+
+
+delete all migrations 
+'find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/migrations/*.pyc"  -delete'

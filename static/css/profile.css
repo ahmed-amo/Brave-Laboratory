@@ -1,0 +1,174 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+.left,
+.right {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    justify-content: center;
+    align-items: baseline;
+}
+
+
+.right {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    float: right;
+    margin-left: 120px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.left {
+    border-right: 2px solid gainsboro;
+    padding: 3rem 6rem;
+    height: 290px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-top: -50px;
+
+}
+
+.left img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.label-file {
+    cursor: pointer;
+    color: #00b1ca;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10%;
+}
+
+.label-file:hover {
+    color: #25a5c4;
+}
+
+.input-file {
+    display: none;
+}
+
+input {
+    appearance: none;
+    border-radius: 0;
+    width: 300px;
+
+}
+
+.input {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    width: 400px;
+}
+
+.input-label {
+    color: #000000;
+    transition: .25s ease;
+    margin: 1rem;
+    background-color: #267ca6;
+    color: white;
+    padding: 5px;
+    padding-inline: 15px;
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    font-size: 16px;
+}
+.label {
+  
+    display: flex;
+    justify-content: center;
+    transition: .25s ease;
+    margin: 1rem;
+    background-color: #00748c;
+    color: white;
+    padding: 5px 0;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    width: 120px;
+}
+
+
+.input-field {
+    border: 0;
+    background-color: transparent;
+    border-bottom: 2px solid #00748c;
+    font-size: 0.8rem;
+    padding: .25rem 0;
+    margin-left: -60px;
+}
+
+/*new adam*/
+.input-field:focus{
+    outline: none;
+}
+/* */
+
+.btn {
+    padding: 10px 0px;
+    color: #00748c !important;
+    background-color: white;
+    font-size: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    width: 120px;
+    margin-left:80%;
+    margin-top: 10px;
+}
+
+.adds {
+    margin: 40px;
+}
+
+.btn:hover {
+    color: white !important;
+    background-color: #00748c;
+    transition: 0.4s;
+}
+
+/*new*/
+img {
+    object-fit: cover;
+}
+
+form{
+    margin-bottom: 2%;
+}
+button:hover{
+    cursor: pointer;
+}
+
+/*new*/
+#profile-preview{
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}

@@ -1,0 +1,106 @@
+{% extends 'receptionist/receptionist.html' %}
+{% load static %}
+
+{% block css_2 %}
+<link rel="stylesheet" href="{% static 'css/button_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/form_create.css' %}">
+<style>
+    .Container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        border: 3px solid #00748c50;
+        border-radius: 10px;
+        background-color: #fff;
+        animation: fade-in 1s ease-out;
+        display: flex;
+    }
+
+    .Container .left-section {
+        flex-basis: 60%;
+        margin-right: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: first baseline;
+    }
+
+    .Container .right-section {
+        flex-basis: 40%;
+    }
+
+    .Container h1 {
+        color: #111;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .Container h2 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .Container p {
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .Container .complaint-section {
+        margin-bottom: 20px;
+    }
+
+    .Container .reply-section {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .Container .reply-section textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+    }
+
+
+    .form-detail{
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        gap: 20px;
+    }
+    form .formbold-btn {
+        width:50%;
+    }
+</style>
+{% endblock css_2 %}
+
+{% block main %}
+<div class="Container">
+    <div class="left-section">
+        <h1>Complaint Detail</h1>
+            <h2>{{ complaint }}</h2>
+            <p>Email: {{ complaint.client.user.email }}</p>
+            <p>Date: {{ complaint.date }}</p>
+            <p>Client: {{ complaint.client.user.first_name }} {{ complaint.client.user.last_name }}</p>
+            <p>Topic: {{ complaint.topic }}</p>
+            <p>Description: {{ complaint.description }}</p>
+       
+    </div>
+
+    <div class="right-section">
+        <div class="reply-section">
+            <form class="form-detail"action="{% url 'reply_complaint' complaint.id %}" method="post">
+                {% csrf_token %}
+                <label class="formbold-form-label" for="id_description">Reply:</label>
+                <textarea class="formbold-form-input" name="description" id="id_description" cols="20" rows="5"></textarea>
+                <button type="submit" class="reply-button formbold-btn">Reply</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main %}

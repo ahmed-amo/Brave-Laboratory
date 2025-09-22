@@ -1,0 +1,66 @@
+{% extends 'admin_user/admin_user.html' %}
+{% load static %}
+{% block main %}
+<style>
+    .filter{
+        width: 130%;
+    }
+    .nurse{
+        margin-right: 3%;
+    }
+</style>
+<div class="Container">
+ 
+    <div class="header ">
+        <div class="search">
+            
+        </div>
+        <div class="nurse">
+            <a href="{% url "blood_bank_add" %}">
+            <button class="list-button filter">
+                <span class="material-icons">add</span>
+                <span>Add Blood Bank</span>
+            </button>
+            </a>
+        </div>
+        
+        
+    </div>
+    {% if banks %}
+    <div class="userlist">
+        <div class="infoheader">
+    <div class= "infoheader1">Bank</div>
+    <div claas= "infoheader2">Capacity</div>
+    <div class= "infoheader3">Samples</div>
+    <div class= "infoheader4">Details</div>
+        </div>     
+        <div class="userscontianer">
+            <div class= "scroll">
+        <ul>
+            {% for bank in banks %}
+                <li class="app1">
+                    <span><strong> #{{ bank.id }}</strong></span>
+                    <span><strong> {{ bank.capacity }}</strong></span>
+                    <span><strong> {{ bank.count }}</strong></span>
+
+                    <div class="buttons">
+                    <button class="list-button"><a class="list-links" href="{% url 'blood_bank_detail' bank.id %}">View Details</a></button>
+                    </div>
+                </li>   
+            {% endfor %}
+        </ul>
+    </div>
+</div> 
+</div>
+    {% else %}
+        <ul>
+            <li class="app1">
+                <span><strong></strong></span>
+                <span><strong>No Blood Banks Registered</strong></span>
+                <span><strong></strong></span>
+            </li>   
+        </ul>
+    {% endif %}
+
+</div>
+{% endblock main %}

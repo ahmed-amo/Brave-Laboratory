@@ -1,0 +1,403 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;&display=swap" rel="stylesheet">        <style>
+        body {
+            font-size: 14px;
+            padding: 0;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr td {
+            padding: 0;
+        }
+
+        table tr td:last-child {
+            text-align: right;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .large {
+            font-size: 1.75em;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #00748c;
+        }
+
+        .header-container {
+            margin: 5px 0 10px 0;
+        }
+        
+        .heading-main{
+            font-size:2em;
+            padding-top:10px;
+            color: #00748c;
+        }
+        
+        .header-container-ai {
+            margin: 60px 0 10px 0;
+        }
+        .heading-ai{
+            font-size:1.4em;
+            padding-top:10px;
+            color: #00748c;
+        }
+
+        .invoice-info-container {
+            font-size: 0.875em;
+        }
+
+        .invoice-info-container td {
+            padding:1px 0;
+            
+        }
+
+        .client-name {
+            font-size: 1.5em;
+            vertical-align: top;
+        }
+
+        .line-items-container {
+            margin: 30px 0 10px 0;
+            font-size: 0.875em;
+        }
+
+        .line-items-container th {
+            text-align: left;
+            color: #00748c;
+            border-bottom: 2px solid #ddd;
+            padding: 1px 0 0px 0;
+            font-size: 1em;
+            text-transform: uppercase;
+        }
+
+        .line-items-container th:last-child {
+            text-align: right;
+            width: 100px;
+        }
+
+        .line-items-container td {
+            padding: 7px 0 0 0;
+        }
+
+        .line-items-container.has-bottom-border tbody tr:first-child td {
+            padding-top: 15px;
+        }
+
+        .line-items-container.has-bottom-border tbody tr:last-child td {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .line-items-container.has-bottom-border {
+            margin-bottom: 0;
+        }
+
+        .line-items-container th.heading-name {
+            width: 250px;
+            
+        }
+
+        .line-items-container th.heading-price {
+            text-align: right;
+            width: 100px;
+        }
+
+        .line-items-container th.heading-value {
+            width: 180px;
+        }
+        .line-items-container th.heading-result {
+            width: 250px;
+        }
+        .line-items-container th.heading-accuracy {
+            width: 250px;
+        }
+
+        .payment-info {
+            width: 38%;
+        }
+
+        .footer {
+            margin-top: 30px;
+        }
+
+        .footer-thanks {
+            font-size: 1.125em;
+        }
+
+        .footer-thanks img {
+            display: inline-block;
+            position: relative;
+            top: 1px;
+            width: 16px;
+            margin-right: 4px;
+            
+        }
+
+        .footer-info {
+            float: right;
+            margin-top: 5px;
+            font-size: 0.75em;
+            color: #ccc;
+        }
+
+        .footer-info span {
+            padding: 0 5px;
+            color: #00748c;
+        }
+
+        .footer-info span:last-child {
+            padding-right: 0;
+        }
+
+        .page-container {
+            display: none;
+        }
+
+        .due {
+            width: 400px;
+        }
+
+        .logo {
+            height: 60px;
+            width: 120px;
+        }
+
+        .line-items-container tbody .p-r-20{
+            padding-right:20px !important;
+        }
+
+        .small{
+            font-size: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-container">
+        <div class="page-container">
+            Page
+            <span class="page"></span>
+            of
+            <span class="pages"></span>
+        </div>
+
+        <table class="header-container">
+            <tr>
+                <td class="heading-td">
+                    <h1 class="heading-main">Test Results</h1>
+                </td>
+                <td class="logo-td">
+                    <img class="logo" alt="Brave Lab Logo" src="{{STATIC_ROOT}}/pdf/logo_pdf.png">
+                </td>
+            </tr>
+            
+        </table>
+        
+
+        <table class="invoice-info-container">
+            <tr>
+                <td>
+                    Client: <strong>{{appointment.client.user.last_name}} {{appointment.client.user.first_name}} </strong>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email : <strong>{{appointment.client.user.email}}</strong>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Address : <strong>{{appointment.client.address}}</strong>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Test Results Finished: <strong>{{ test_result.creation_time }}</strong>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Test Results ID: #<strong>{{test_result.id}}</strong>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+
+
+        {% for test in tests %}
+        <table class="line-items-container">
+                <thead>
+                        <tr>
+                            <th class="heading-name">{{ test.test_offered.name }}</th>
+                            <th class="heading-value">Value</th>
+                            <th class="heading-low">
+                                {% if gender == "M" %}
+                                Low Male Range
+                                {% elif gender == "F" %}
+                                Low Female Range
+                                {% endif %}
+                            </th>
+                            <th class="heading-high">
+                                {% if gender == "M" %}
+                                High Male Range
+                                {% elif gender == "F" %}
+                                High Female Range
+                                {% endif %}
+                            </th>
+                        </tr>
+                </thead>
+                <tbody>
+                    {% for component in test.components.all %}
+                        <tr>
+                            <td class="p-r-20">{{ component.info.name }}</td>
+                            <td class="bold p-r-20"> {{ component.value }} {{ component.info.unit }}</td>
+                            <td class="bold low-value">
+                                {% if gender == "M" %}
+                                    {{component.info.low_male_range}} {{ component.info.unit }}
+                                {% elif gender == "F" %}
+                                    {{component.info.low_female_range}}  {{ component.info.unit }}
+                                {% endif %}
+                            </td>
+                            <td class="bold high-value">
+                                {% if gender == "M" %}
+                                    {{component.info.high_male_range}}  {{ component.info.unit }}
+                                {% elif gender == "F" %}
+                                    {{component.info.high_female_range}}  {{ component.info.unit }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+
+
+        {%if test_result.anemia %}
+        <table class="header-container-ai">
+            <tr>
+                <td class="heading-td">
+                    <h1 class="heading-ai">Anemia Results <small class="small">Powered By AI</small></h1>
+                </td>
+                <td class="logo-td">
+                </td>
+            </tr>
+            
+        </table>
+        <table class="line-items-container">
+            <thead>
+                    <tr>
+                        <th class="heading-result">Result</th>
+                        <th class="heading-value">Probability</th>
+                        <th>
+                        </th>
+                        <th class="heading-accuracy">
+                            Model Accuracy
+                        </th>
+                    </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td class="bold">
+                            {% if test_result.anemia.positive %}
+                            Positive
+                            {% elif not test_result.anemia.positive%}
+                            Negative
+                            {%endif%}
+                        </td>
+                        <td class="bold">{{test_result.anemia.probability}}%</td>
+                        <td >
+                        </td>
+                        <td class="bold high-value">
+                            94.25%
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        {%endif%}
+
+
+        {% if test_result.diabetes %}
+        <table class="header-container-ai">
+            <tr>
+                <td class="heading-td">
+                    <h1 class="heading-ai">Diabetes Results <small class="small">Powered By AI</small></h1>
+                </td>
+                <td class="logo-td">
+                </td>
+            </tr>
+            
+        </table>
+        <table class="line-items-container">
+            <thead>
+                    <tr>
+                        <th class="heading-result">Result</th>
+                        <th class="heading-value">Probability</th>
+                        <th>
+                        </th>
+                        <th class="heading-accuracy">
+                            Model Accuracy
+                        </th>
+                    </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td class="bold">
+                            {% if test_result.diabetes.positive %}
+                            Positive
+                            {% elif not test_result.diabetes.positive %}
+                            Negative
+                            {% endif %}
+                        </td>
+                        <td class="bold">{{test_result.diabetes.probability}}%</td>
+                        <td >
+                        </td>
+                        <td class="bold high-value">
+                            96.75%
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        {%endif%}
+
+        <div class="footer">
+            <div class="footer-info">
+                <span>bravelaboratory@gmail.com</span> |
+                <span>0768513543</span> |
+                <span>bravelab.com</span>
+            </div>
+            <div class="footer-thanks">
+                <span>Thank you for choosing Brave Lab !</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

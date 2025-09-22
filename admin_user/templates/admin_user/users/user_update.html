@@ -1,0 +1,103 @@
+{% extends 'admin_user/admin_user.html' %}
+{% load static %}
+
+{% block css_3 %}
+
+
+<style>
+    .user-update-form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 30px 75px 30px 60px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .user-update-form h1 {
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align:left;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .form-group .error {
+        color: red;
+        margin-top: 5px;
+    }
+
+    .user-update-form .button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #4CAF50;
+        transition: background-color 0.3s;
+        border-radius: 4px;
+    }
+    .user-update-form .update {
+        background-color: #45a049;
+    }
+    .user-update-form .update:hover {
+        background-color: #2e7331;
+    }
+
+</style>
+{% endblock css_3 %}
+{% block main %}
+<div class="Container">
+    <div class="user-update-form">
+        <h1>User Update</h1>
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            {% if form.non_field_errors %}
+                <div class="form-group">
+                    {% for error in form.non_field_errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            
+            <input type="submit" name="update" value="Update" class="button update">
+        </form>
+    </div>
+
+</div>
+{% endblock main %}

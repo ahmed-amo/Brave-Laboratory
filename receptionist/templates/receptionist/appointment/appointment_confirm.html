@@ -1,0 +1,120 @@
+{% extends 'receptionist/receptionist.html' %}
+{% load static %}
+
+{% block css_3 %}
+<style>
+    .Container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px;
+        border: 3px solid #00748c50;
+        border-radius: 10px;
+        background-color: #fff;
+        animation: fade-in 1s ease-out;
+    }
+
+    /*LABEL*/
+    .formbold-form-label {
+        display: block;
+        font-weight: 500;
+        font-size: 16px;
+        color: #000000;
+        margin-bottom: 12px;
+    }
+
+
+    /*INPUT*/
+
+    .formbold-form-input {
+        width: 100%;
+        padding: 15px 20px 15px 15px;
+        border-radius: 6px;
+        border: 1px solid #e0e0e0;
+        background: white;
+        font-weight: 500;
+        font-size: 16px;
+        color: #6b7280;
+        outline: none;
+        resize: none;
+    }
+
+    .formbold-form-input:focus {
+        border-color: #267ca6;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /*BUTTON*/
+
+    .formbold-btn {
+        text-align: center;
+        font-size: 16px;
+        border-radius: 6px;
+        padding: 10px 30px;
+        border: none;
+        font-weight: 600;
+        background-color: #00748c;
+        color: white;
+        width: 250px;
+        cursor: pointer;
+    }
+
+    .formbold-btn:hover {
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+        background-color: #046275;
+    }
+
+    .form-button {
+        width: 113%;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .policy{
+        width:auto;
+        }
+
+    form a {
+        text-decoration: none;
+        color:white;
+    }
+
+</style>
+{% endblock css_3 %}
+{% block main %}
+
+<div class="Container">
+    <h1>Appointment Confirmation page 'Client Arrived/Payed'</h1>
+    {% if not appointment.arrived %}
+        <form method="post" >
+        {% csrf_token %}
+            
+            {% if not appointment.payment.payed_appointment_fee %}
+            <label for="id_appointment_fee_paid" >
+                Appointment Fee Paid? (Appointment Fee: 5.00)
+                <input type="checkbox" name="appointment_fee_paid" required id="id_appointment_fee_paid" class="formbold-form-input policy">
+            </label>
+              
+            {% else %}
+                <p>Appointment Fee has already been paid.</p>
+                <input type="hidden" name="{{form.appointment_fee_paid.html_name}}" value="True">
+                <input type="hidden" name="payed" id="payedInput" value="payed">
+            {% endif %}
+
+            <div>
+                <button type="submit" class="formbold-btn">Confirm</button>
+                <button class="formbold-btn"><a href="{% url 'appointment_detail' appointment.id %}">Cancel</a></button>
+    
+            </div>
+
+    </form>
+    {% else %}
+        <p>Client Already Payed Appointment Fee</p>
+    {% endif %}
+
+</div>   
+
+{% endblock main %}

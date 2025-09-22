@@ -1,0 +1,75 @@
+{% extends 'receptionist/receptionist.html' %}
+{% load static %}
+{% block css_3 %}
+
+<link rel="stylesheet" href="{% static 'css/report.css' %}">
+
+{% endblock css_3 %}
+{% block main %}
+<div class="Container">
+  <div class="header-detail"> 
+    <H1>GENERAL REPORT</H1>
+    
+  </div>
+<div class="infos">
+    <div class="client cont">
+        <p>Report ID: <strong>#{{report.id}}</strong></p>
+        <p>Invoice ID : <a href="{% url 'invoice_detail' report.id report.invoice.id %}">#{{ report.invoice.id }}</a></p>
+        <p>Client ID : #<strong>{{report.invoice.client.user.id}}</strong></p>
+        <p>Client Name :&nbsp;<strong>{{report.invoice.client.user.first_name}} {{report.invoice.client.user.last_name}}</strong></p>
+        <p>Age : &nbsp;<strong>{{report.invoice.client.age}}</strong></p>
+        <p>Gender: &nbsp;<strong> {{report.invoice.client.gender}} </strong></p>
+        <p>Email:&nbsp;<strong>{{report.invoice.client.user.email}}</strong></p>
+        <p>Address:&nbsp;<strong>{{report.invoice.client.address}}</strong></p>
+        <p>Appointment ID :<strong>#{{ report.test_result.request.appointment.id }}</strong></p>
+        <p>Date:&nbsp;<strong>{{report.test_result.request.appointment.date}}</strong></p>
+    </div>
+    <div class="work cont">
+        <p>Test Results ID: <strong>#{{report.test_result.id}}</strong></p>
+        <p>Test Duration:&nbsp;<strong>8 hours 15 mins{{report.test_result.request.durations}}</strong></p>
+        <p>Nurse: &nbsp;<strong>{{report.test_result.request.nurse.user.first_name}} {{report.test_result.request.nurse.user.last_name}}</strong></p>
+        <p>Tests Made:&nbsp;
+          {% for test in report.test_result.request.tests.all %}
+          <strong>-{{test.test_offered.name}}</strong>
+          {% endfor %}
+        </p>
+    </div>
+    <div class="payments cont">
+        <div>
+        <p>Tests Made</p>
+        <p>&nbsp;<strong>{{report.test_result.request.tests.count}}</strong></p>
+        </div>
+        <div>
+            <p>Price</p>
+            <p>&nbsp;<strong><span>$</span>{{report.invoice.total_price}}</strong></p>
+        </div>
+        <div>
+            <p>(Payed)Appointment</p>
+            <p>&nbsp;<strong><span>$</span>5</strong></p>
+            
+        </div>
+        <div>-------------------------------</div>
+        <div>
+            <p>Total Payed</p>
+            <p>&nbsp;<strong><span>$</span>{{report.test_result.request.appointment.payment.total_amount_payed}}</strong></p>
+        </div>
+        {%if not report.invoice.payment_status %}
+        <a href="{% url 'invoice_detail' report.id report.invoice.id %}"><button class="formbold-btn">Pay Invoice Fees</button></a>
+        {% else %}
+        <a href="{% url 'pdf_client_invoice' report.invoice.id %}?download=true" class="download-button"><button class="formbold-btn">Download Invoice</button></a>
+        <a href="{% url 'pdf_client_invoice' report.invoice.id %}" target="_blank" class="view-button"><button class="formbold-btn">View Invoice</button></a>
+        {% endif %}
+    </div>
+</div>
+<div class="buttons-links">
+  <a href="{% url 'pdf_client_results' report.invoice.id %}?download=true" class="download-button"><button class="formbold-btn">Download Test Details</button></a>
+  <a href="{% url 'pdf_client_results' report.invoice.id %}" target="_blank" class="view-button"><button class="formbold-btn">View Test Details</button></a>
+</div>
+    {% comment %} <h1>Report Detail</h1>
+    <h2>Report #{{ report.id }}</h2>
+    <p>Test Result: <a href="{% url 'test_result_detail' report.test_result.id %}">{{ report.test_result }}</a></p>
+    <p>Description: {{ report.description }}</p> {% endcomment %}
+</div>
+{% endblock main %}
+<p>Appointment #{{ report.test_result.request.appointment.id }}</p>
+<p>Invoice: <a href="{% url 'invoice_detail' report.id report.invoice.id %}">{{ report.invoice }}</a></p>

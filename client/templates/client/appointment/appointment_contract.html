@@ -1,0 +1,222 @@
+{% extends 'client/client.html' %}
+{% load static %}
+
+{% block main %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.5;
+      }
+  
+      h1 {
+        font-size: 24px;
+        color: #333;
+      }
+  
+      h2 {
+        font-size: 18px;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        color: #555;
+      }
+  
+      h3 {
+        font-size: 16px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #777;
+      }
+  
+      p {
+        margin-bottom: 10px;
+      }
+  
+      .section {
+        margin-bottom: 30px;
+      }
+  
+      .signature {
+        margin-top: 40px;
+      }
+  
+      .cont {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+  
+      .cont:last-child {
+        margin-bottom: 0;
+      }
+  
+      .Container {
+        padding-left: 10%;
+        padding-right: 10%;
+        animation: fade-in 0.5s ease;
+      }
+  
+      .note {
+        font-size: 12px;
+        color: #666;
+        margin-top: 10px;
+      }
+  
+      .button-cont {
+        margin-top: 20px;
+      }
+  
+      .button-cont button {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+  
+      .button-cont button[name="cancel"] {
+        background-color: #e53935;
+      }
+  
+      .button-cont button:hover {
+        background-color: #45a049;
+      }
+
+      @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+      }
+      
+  </style>
+<div class='Container'>
+    <div class="cont">
+        <h1>Contract</h1>
+        <div class="section">
+          <h2>Blood Test Appointment Contract</h2>
+          <p>This Blood Test Appointment Contract is made between the laboratory 'Brave Lab' and the client {{appointment.client.user.first_name}} {{appointment.client.user.last_name}} as of the date of booking the appointment {{appointment.date}}.</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Services</h2>
+          <p>The Laboratory agrees to provide the following services to the Client:</p>
+          <ul>
+            <li>Blood test appointment at a mutually agreed date and time.</li>
+            <li>Collection of blood samples.</li>
+            <li>Analysis of the blood samples as per the requirements of the Client.</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Appointment Details</h2>
+          <p>Date: {{appointment.date}}</p>
+          <p>Time: Morning</p>
+          <p>Location: Constantine, Khroub</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Client's Responsibilities</h2>
+          <ul>
+            <li>The Client agrees to arrive at the Laboratory on time for the appointment.</li>
+            <li>The Client acknowledges that they may be required to fast or follow specific instructions before the blood test.</li>
+            <li>The Client agrees to provide accurate and complete information regarding their medical history and any relevant conditions.</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Payment</h2>
+          <p>The Client agrees to pay the Laboratory the agreed-upon fee for the blood test appointment. The payment details will be provided separately.</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Confidentiality</h2>
+          <p>The Laboratory agrees to keep all client information and test results confidential, except as required by law.</p>
+          <p>The Client acknowledges that the Laboratory cannot guarantee absolute confidentiality in cases where information is transmitted electronically or through third-party services.</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Test Results</h2>
+          <p>The Laboratory will provide the Client with the test results within a reasonable timeframe.</p>
+          <p>The Laboratory will communicate the results to the Client through a secure method or during a follow-up appointment.</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Limitation of Liability</h2>
+          <p>The Laboratory shall not be liable for any damages, losses, or injuries arising from the blood test appointment, unless caused by gross negligence or willful misconduct.</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Termination</h2>
+          <p>Either party may terminate this Contract in writing if there is a material breach by the other party.</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Governing Law and Jurisdiction</h2>
+          <p>This Contract shall be governed by and construed in accordance with the laws of Algeria. Any disputes arising under or in connection with this Contract shall be subject to the exclusive jurisdiction of the courts of Algeria.</p>
+        </div>
+      </div>
+  
+      <div class="cont">
+        <div class="section">
+          <h2>Entire Agreement</h2>
+          <p>This Contract constitutes the entire agreement between the parties and supersedes any prior understandings or agreements, whether written or oral, relating to the blood test appointment.</p>
+        </div>
+      </div>
+  
+  
+      <div class="note">
+        <p><em>Please note that this contract is provided for informational purposes only and should not be considered legal advice. It's important to consult with a qualified legal professional to ensure the contract meets all legal requirements in your jurisdiction and to address any specific considerations for your laboratory.</em></p>
+      </div>
+  
+      <div class="button-cont">
+          <form method="POST" action="{% url 'client_appointment_contract' %}" >
+
+            {% csrf_token %}
+    
+            <input type="hidden" name="data.date" value="{{ data.date }}">
+            <input type="hidden" name="data.description" value="{{ data.description }}">
+            
+            {% if data.document is not None %}
+            <input type="hidden" name="data.document" value="{{ data.document }}">
+            {% endif %}
+
+            <input type="hidden" name="data.test_count" value="{{ data.test_count }}">
+            {% for test in data.tests_requested %}
+            <input type="hidden" name="data.tests_requested{{ forloop.counter }}" value="{{ test }}">
+            {% endfor %}
+
+            <input type="hidden" name="data.total_price" value="{{ data.total_price }}">
+    
+            <button type="submit" name="contract">Confirm and Agree</button>
+            <button type="submit" name="cancel">Cancel</button>
+            
+        </form>
+      </div>
+
+</div>
+
+
+{% endblock main %}

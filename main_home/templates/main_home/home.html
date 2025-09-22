@@ -1,0 +1,128 @@
+{% extends 'main_home/base.html' %}
+{% load static %}
+
+{% block css %}
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <style>
+        .header{
+            background-image:url("{% static 'img/signupback.png' %}");
+        }
+    </style>
+
+{% endblock css %}
+
+
+{% block content %}
+
+        <div class="textbox">
+            <h1>Welcome To The Brave Laboratory</h1>
+            <p>
+            Brave Lab is a health facility for the examination and testing of blood samples<br>
+            We Provide information, prevention and treatment of diseases<br>
+            Register now for one the fastest services in the market
+            </p>
+            <a href="{% url 'register' %}">REGISTER</a>
+        </div>
+    </section>
+    <div class="services" id="service">
+        <h1>Services We Offer</h1>
+        <p>here are some of our secured,safe and proffessional Services for the client</p>
+    </div>
+    <section class="services1 reveal">
+        <div class="serv bord1">
+            <h3>Make Online,Safe and Secure Appointments</h3>
+            <img alt='booking image' src="{% static 'img/booking.png' %}" >
+            <p>with us  you dont need to drive to walk just from your home , all you need is to make an account , and make an appointment </p>
+        </div>
+        <div class="serv bord2 ">
+            <h3>Blood Tests</h3>
+            <img alt='bloodtest image' src="{% static 'img/bloodtest.png' %}">
+            <p>all the blood tests are available , with good prices </p>
+        </div>
+    </section>
+    <section class="services2 reveal">
+        <div class="serv bord3">
+            <h3>Medical examination for various diseases</h3>
+            <img alt="medical examination image" src="{% static 'img/medical-examination.png' %}">
+            <p>proffessional medical examination for various diseases such as : Cholera,
+                Hepatitis A,
+                Hepatitis E,
+                Japanese encephalitis,
+                Meningococcal disease,
+                Rabies,
+                Tick-borne encephalitis,
+                Typhoid fever,
+                Yellow fever</p>
+        </div>
+        <div class="serv bord4">
+            <h3>Online Result Checking</h3>
+            <img alt="image of test results" src="{% static 'img/result.png' %}">
+            <p>if you want to check your result without wasting  money -time , its also available with us you can check the tests results from Home
+                and u can take it when ever you waent
+            </p>
+        </div>
+    </section>
+    <div class="services" id="about">
+        <h1>What People think of us ?</h1>
+        <p>Thank you for your trust !</p>
+    </div>
+    <section class="test">
+        <figure class="snip1157">
+            <blockquote>really good place , good people , nurses giving full respect also the auditor is really kind there 
+            <div class="arrow"></div>
+            </blockquote>
+            <img src="{% static 'img/sq-sample30.jpg' %}" alt="sq-sample3" />
+            <div class="author">
+            <h5>Talbi Nabil<span>25 Years</span></h5>
+            </div>
+        </figure>
+        <figure class="snip1157 hover">
+            <blockquote>Thank you. before I begin, I'd like everyone to notice that the  report is in a professional, clear plastic binder...When a report looks this good, you know it'll get an A. That's a tip kids. Write it down.
+            <div class="arrow"></div>
+            </blockquote>
+            <img src="{% static 'img/sq-sample27.jpg' %}" alt="sq-sample27" />
+            <div class="author">
+            <h5>mokrani anis <span> 30 years</span></h5>
+            </div>
+        </figure>
+        <figure class="snip1157">
+            <blockquote>really good prcicing compared with normal laboratories and super proffessional , u will feel safe and secure 
+            <div class="arrow"></div>
+            </blockquote>
+            <img src="{% static 'img/sq-sample17.jpg' %}" alt="sq-sample17" />
+            <div class="author">
+            <h5>Lahrech Lamia <span>21 Years</span></h5>
+            </div>
+        </figure>
+    </section>
+    <footer class="footer-distributed" id="footer">
+        <div class="footer-left">
+            <img alt="Brave Lab Logo"  src="{% static 'img/download.png' %}" />
+            <p class="footer-links">
+                <a href="#">Home</a>
+                ·
+                <a href="#">Services</a>
+                ·
+                <a href="#">Pricing</a>
+                ·
+                <a href="#">About</a>
+                ·
+                <a href="#">register</a>
+                ·
+                <a href="#">Contact</a>
+            </p>
+            <p class="footer-company-name">Brave Lab© 2015</p>
+        </div>
+        <div class="footer-right">
+            <p>Contact Us</p>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.email }}
+                {{ form.content }}
+                <button type='submit'>Send</button>
+            </form>
+        </div>
+    </footer>
+
+{% endblock content %}

@@ -1,0 +1,113 @@
+{% extends 'nurse/nurse.html' %}
+{% load static %}
+{% block css_3 %}
+<link rel="stylesheet" href="{%static 'css/form_create.css' %}">
+<style>
+  .Container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    border: 3px solid #00748c50;
+    border-radius: 10px;
+    background-color: #fff;
+    animation: fade-in 1s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 20px;
+        width: 400px;
+    }
+    .formbold-btn{
+      width: auto;
+    }
+.number{
+  width: 90%;
+}
+</style>
+{% endblock css_3 %}
+{% block main %}
+  <div class="Container">
+    <h1>Evaluation</h1>
+
+    {% if not appointment.performed %}
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <label class="formbold-form-label" class="formbold-form-label" for="id_gender">Gender:</label>
+          <select class="formbold-form-input" name="gender" required id="id_gender">
+            <option value="" selected>---------</option>
+            <option value="0.0">Male</option>
+            <option value="1.0">Female</option>
+          </select>
+        </div>
+        <div>
+          <label class="formbold-form-label" for="id_age">Age:</label>
+          <input class="formbold-form-input number" type="number" name="age" step="any" required id="id_age" />
+        </div>
+        <div>
+          <label class="formbold-form-label" for="id_height">Height(m):</label>
+          <input class="formbold-form-input number" type="number" name="height" step="any" required id="id_height"/>
+        </div>
+        <div>
+          <label class="formbold-form-label" for="id_weight">Weight(Kg):</label>
+          <input class="formbold-form-input number" type="number" name="weight" step="any" required id="id_weight" />
+        </div>
+        <div>
+          <label class="formbold-form-label" for="id_hypertension">High Blood Pressure:</label>
+          <select class="formbold-form-input" name="hypertension" required id="id_hypertension">
+            <option value="" selected>---------</option>
+            <option value="0.0">No</option>
+            <option value="1.0">Yes</option>
+          </select>
+        </div>
+        <div>
+          <label class="formbold-form-label" for="id_heart_disease">Heart disease:</label>
+          <select class="formbold-form-input" name="heart_disease" required id="id_heart_disease">
+            <option value="" selected>---------</option>
+            <option value="0.0">No</option>
+            <option value="1.0">Yes</option>
+          </select>
+        </div>
+        <div class="mg-b">
+          <label class="formbold-form-label" for="id_smoking_history">Smoking history:</label>
+          <select class="formbold-form-input" name="smoking_history" required id="id_smoking_history">
+            <option value="" selected>---------</option>
+            <option value="0.0">Never</option>
+            <option value="1.0">No Info</option>
+            <option value="2.0">Former</option>
+            <option value="3.0">Not Current</option>
+            <option value="4.0">Ever</option>
+            <option value="5.0">Current</option>
+          </select>
+        </div>
+
+        <button type="submit" name="preformed" class="formbold-btn">Submit Evaluation</button>
+      </form>
+    {% else %}
+      <p>Appointment already preformed.</p>
+    {% endif %}
+  </div>
+{% endblock %}
+
+
+{% block scripts_3 %}
+  <script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+  {% if messages %}
+    {% for message in messages %}
+      <script>
+        Swal.fire({
+          title: 'Success !',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'Confirm'
+        })
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

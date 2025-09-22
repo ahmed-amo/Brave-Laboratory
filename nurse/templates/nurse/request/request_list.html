@@ -1,0 +1,223 @@
+{% extends 'nurse/nurse.html' %}
+{% load static %}
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+{% endblock css_2 %}
+{% block main %}
+<div class="Container">
+    <div class="header ">
+        <div class="search">
+            <form class="search-bar" method="post" >
+                {% csrf_token %}
+                <button type="submit" name="search">
+                    <span class="material-icons search-icon">
+                        search
+                        </span>
+                </button>
+                <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+                
+            </form>
+        </div>
+
+
+
+
+
+        <div class="header ">
+            <div class="search">
+               
+            </div>
+            <div class="nurse">
+            <a href="{% url "request_list" %}?state=pending">
+                <button class="list-button filter">
+                    <span>Pending</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+            <a href="{% url "request_list" %}?state=working">
+                    <button class="list-button filter">
+                    <span>Working</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+            <a href="{% url "request_list" %}?state=finished">
+                    <button class="list-button filter">
+                    <span>Finished</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+                
+            </div>
+            
+        </div>
+
+
+
+
+
+
+
+        <div class="nurse">
+            <a href="{% url "request_list" %}?date={{sort_date}}&urgency={{sort_urgency}}&date_sort=True&state={{state}}">
+                <button class="list-button filter">
+                    <span>Date</span>
+                    <span class="material-icons">sort</span>
+                </button>
+            </a>
+            <a href="{% url "request_list" %}?date={{sort_date}}&urgency={{sort_urgency}}&urgency_sort=True&state={{state}}">
+            <button class="list-button filter">
+                <span>Urgency</span>
+                <span class="material-icons">sort</span>
+            </button>
+            </a>
+        </div>
+        
+        
+    </div>
+
+    
+    
+
+    
+    {% if pending_requests is not None%}
+    {% if pending_requests %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Pending Requests</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+        <ul class="lists">
+            {% for request in pending_requests %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ request.appointment.id }}</strong></span>
+                    <span><strong>{{ request.creation_time }}</strong></span>
+                    <span><strong>{% if request.appointment.urgent %}Urgent{%else%}Normal {% endif %} </strong></span>
+                    
+
+                    <div class="buttons">
+                    <button class="list-button"><a class="list-links" href="{% url 'request_detail' request.id %}">View Details</a></button>
+                    </div>
+                </li>   
+            {% endfor %}
+        </ul>
+        </div>
+        </div>
+        </div>
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Pending Requests</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Pending Requests</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+    
+    {% if working_on_requests is not None%}
+    {% if working_on_requests %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Working Requests</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+        <ul class="lists">
+            {% for request in working_on_requests %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ request.appointment.id }}</strong></span>
+                    <span><strong>{{ request.appointment.client.user.first_name }}   
+                        {{ request.appointment.client.user.last_name }}</strong></span>
+                    <span><strong>{{ request.creation_time }}</strong></span>
+                    <div class="buttons">
+                    <button class="list-button"><a class="list-links" href="{% url 'request_detail' request.id %}">View Details</a></button>
+                    </div>
+                </li>  
+            {% endfor %}
+        </ul>
+    </div>
+    </div>
+    </div>
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Working Requests</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Working Requests</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+    
+    {% if finished_requests is not None%}
+    {% if finished_requests %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Finished Requests</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+        <ul class="lists">
+            {% for request in finished_requests %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ request.appointment.id }}</strong></span>
+                    <span><strong>{{ request.appointment.client.user.first_name }}   
+                        {{ request.appointment.client.user.last_name }}</strong></span>
+                    <span><strong>{{ request.creation_time }}</strong></span>
+                    <div class="buttons">
+                    <button class="list-button"><a class="list-links" href="{% url 'request_detail' request.id %}">View Details</a></button>
+                    </div>
+                </li>  
+            {% endfor %}
+        </ul>
+    </div>
+    </div>
+    </div>
+    {% else %}
+        <div class="userlistcl">
+            <div class="infoheadercl">
+                <h3>Finished Requests</h3>
+                </div>     
+            <div class="userscontianercl">
+                <div class= "scrollcl">
+                    <ul class="lists">
+                        <li class="app1">
+                            <span><strong></strong></span>
+                            <span><strong>No Finished Requests</strong></span>
+                            <span><strong></strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+        </div> 
+        {% endif %}
+    {% endif %}
+
+    
+</div>
+
+{% endblock main %}

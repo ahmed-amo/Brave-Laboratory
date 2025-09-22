@@ -1,0 +1,86 @@
+{% extends 'nurse/nurse.html' %}
+{% load static %}
+{% block css_3 %}
+<link rel="stylesheet" href="{%static 'css/form_create.css' %}">
+<style>
+  .Container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    border: 3px solid #00748c50;
+    border-radius: 10px;
+    background-color: #fff;
+    animation: fade-in 1s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 20px;
+        width: 400px;
+    }
+    .formbold-btn{
+      width: auto;
+      margin-top: 20px;
+    }
+.number{
+  width: 90%;
+}
+</style>
+{% endblock css_3 %}
+{% block main %}
+<div class="Container">
+		
+    <h3>Appointment Detail</h3>
+
+    <h2>{{ appointment }}</h2>
+    
+    <p>Date: {{ appointment.date }}</p>
+    <p>Client: {{ appointment.client.user.first_name }} {{ appointment.client.user.last_name }}</p>
+    <p>Description: {{ appointment.description }}</p>
+    <!-- Display other appointment details as needed -->
+    <p>Document:</p>
+    {% if appointment.document %}
+        <a href="{{ appointment.document.url }}" target="_blank">
+            <img src="{{ appointment.document.url }}" width="200" >
+        </a>
+    {% else %}
+        <p>No document provided.</p>
+    {% endif %}
+
+    {% if not appointment.performed %}
+        <a href="{% url 'evaluation' appointment.id %}"><button type="submit" class="formbold-btn" >Start Evaluation</button></a>
+    {% else %}
+      <p>Appointment already preformed.</p>
+    {% endif %}
+    {% comment %} {% if not appointment.performed %}
+      <form method="POST" action="{% url 'lobby_detail' appointment.id %}">
+        {% csrf_token %}
+        <button type="submit" name="preformed">Preformed</button>
+      </form>
+    {% else %}
+      <p>Appointment already preformed.</p>
+    {% endif %} {% endcomment %}
+    
+</div>
+{% endblock main %}
+
+{% block scripts_3 %}
+  <script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+  {% if messages %}
+    {% for message in messages %}
+      <script>
+        Swal.fire({
+          title: 'Success !',
+          text: '{{ message }}',
+          icon: 'success',
+          confirmButtonText: 'Confirm'
+        })
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

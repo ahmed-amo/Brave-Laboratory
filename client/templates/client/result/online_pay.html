@@ -1,0 +1,122 @@
+{% extends 'client/client.html' %}
+{% load static %}
+
+{% block main %}
+<style>
+    .Container {
+        margin: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        animation: fade-in 0.5s;
+        width: 50%;
+      }
+      
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      
+      h3 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      
+      strong {
+        font-weight: bold;
+      }
+      
+      
+      #paypal-button-container {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+      }
+      
+      button#bookButton {
+        display: none;
+      }
+</style>
+<div class="Container">
+    <h3>Online Payment</h3>
+    <div>
+    <span><strong>Invoice #: {{ invoice.id }}</strong></span>
+    </div>
+    <div>
+        <span><strong>Total Price: {{ invoice.total_price }}</strong></span>
+    </div>
+    <br>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div id="paypal-button-container"></div>
+        <button type="submit" id="bookButton" hidden disabled></button>
+    </form>
+    
+</div>
+{% endblock main %}
+
+
+{% block scripts_3 %}
+<script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+<script src="https://www.paypal.com/sdk/js?client-id=AedI_3BVqb2iK2jXTYxxmcbKWHvdipYhZQYFPxfaq-6_XxiKvnjuSd6cyriyOOrybkLx8E8sEAYi5cFy&components=buttons&currency=USD&disable-funding=credit,card"></script>
+<script>
+    function clickButton() {
+        var bookButton = document.getElementById('bookButton');
+        bookButton.removeAttribute("disabled") 
+        bookButton.click();
+    }
+    
+
+    paypal.Buttons({
+
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{ invoice.total_price }}', 
+                    }
+                }]
+            });
+        },
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Handle the successful transaction
+                console.log(details);
+                Swal.fire({
+                  title: 'Success!',
+                  text: "Transaction Complete!",
+                  icon: 'success',
+                  confirmButtonText: 'Confirm'
+                });
+                clickButton();
+            });
+        },
+    
+        // Handle errors or cancellations
+        onError: function(err) {
+            console.log(err);
+            Swal.fire({
+              title: 'Error!',
+              text: "Transaction Failed",
+              icon: 'error',
+              confirmButtonText: 'Confirm'
+            });
+            // You can display an error message or perform other error handling actions here
+        },
+        
+        style: {
+            color: 'gold',
+            shape: 'pill',
+        },
+        locale: 'en_US',
+    }).render('#paypal-button-container');
+</script>
+{% endblock scripts_3 %}

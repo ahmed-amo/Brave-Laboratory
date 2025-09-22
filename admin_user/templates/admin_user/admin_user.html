@@ -1,0 +1,126 @@
+{% extends 'main_home/actors_base.html' %}
+{% load static %}
+
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+{% endblock css_2 %}
+
+{% block main %}
+<div class="Container">
+    <div class="header ">
+        <div class="search">
+            <form class="search-bar" method="post" >
+                {% csrf_token %}
+                <button type="submit" name="search">
+                    <span class="material-icons search-icon">
+                        search
+                        </span>
+                </button>
+                <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+                
+            </form>
+        </div>
+        <div class="nurse">
+            <a href="{% url "admin_user" %}?date={{sort_date}}&username={{sort_username}}&type={{sort_type}}&date_sort=True&state={{state}}">
+                <button class="list-button filter">
+                    <span>Date</span>
+                    <span class="material-icons">sort</span>
+                </button>
+            </a>
+            <a href="{% url "admin_user" %}?date={{sort_date}}&username={{sort_username}}&type={{sort_type}}&username_sort=True&state={{state}}">
+            <button class="list-button filter">
+                <span>Username</span>
+                <span class="material-icons">sort</span>
+            </button>
+            </a>
+            <a href="{% url "admin_user" %}?date={{sort_date}}&username={{sort_username}}&type={{sort_type}}&type_sort=True&state={{state}}">
+            <button class="list-button filter">
+                <span>Type</span>
+                <span class="material-icons">sort</span>
+            </button>
+            </a>
+        </div>
+        
+        
+    </div>
+
+
+    
+    {% if users %}
+    <div class="userlist">
+        <div class="infoheader">
+    <div class= "infoheader1">ID</div>
+    <div claas= "infoheader2">Username</div>
+    <div class= "infoheader3">Group</div>
+    <div class= "infoheader4">Details</div>
+        </div>     
+        <div class="userscontianer">
+            <div class= "scroll">
+                <ul>
+                    {% for user in users %}
+                        <li class="app1">
+                            <span><strong> #{{ user.id }}</strong></span>
+                            <span><strong> {{ user.username }}</strong></span>
+                            <span><strong> {{ user.groups.first.name }}</strong></span>
+
+                            <div class="buttons">
+                            <button class="list-button"><a class="list-links" href="{% url 'user_detail' user.id %}">View Details</a></button>
+                            </div>
+                        </li>   
+                    {% endfor %}
+                </ul>
+            </div>
+        </div> 
+    </div>    
+    {% endif %}
+
+</div>
+{% endblock main %}
+    
+    
+
+{% block sidebar %}
+
+<li><a href={% url 'admin_user' %}><span class="material-icons X">layers</span> <span class="nav-item">Home</span></a></li>
+<li><a href={% url 'account_add' %}><span class="material-icons X">person_add</span><span class="nav-item">Create Account</span></a>
+</li>
+<li><a href={% url 'blood_banks' %}><span class="material-icons X">vaccines</span><span
+            class="nav-item">Blood Banks</span></a></li>
+
+
+{% endblock sidebar %}
+
+
+{% block scripts_2 %}
+<script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+{% if messages %}
+{% for message in messages %}
+<script>
+    Swal.fire({
+        title: 'Deleted !',
+        text: '{{ message }}',
+        icon: 'success',
+        confirmButtonText: 'Confirm'
+    })
+</script>
+{% endfor %}
+{% endif %}
+
+<script>
+    var path = window.location.pathname;
+    var links = document.querySelectorAll('nav ul li a');
+
+    links.forEach(function (link) {
+        var href = link.getAttribute('href');
+
+        // Check if the current path starts with the href
+        if (path.startsWith(href)) {
+            // Add the "active" class to the parent <li> element
+            link.parentElement.classList.add('active');
+        }
+    });
+</script>
+{% endblock scripts_2 %}

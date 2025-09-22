@@ -1,0 +1,51 @@
+{% extends 'nurse/nurse.html' %}
+{% load static %}
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+<link rel="stylesheet" href="{% static 'css/lists/test_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/button_style.css' %}">
+<style>
+    .paragraph{
+        font-size: 1.2rem;
+        margin: 15px 0;
+    }
+</style>
+{% endblock css_2 %}
+
+{% block main %}
+<div class="Container">
+		
+    <h1>Tests for Analysis Request #{{ analysis_request.id }}</h1>
+
+    <ul>
+        {% for test in tests %}
+            <li class="app1">
+                <span><strong>{{ test.test_offered.name }}</strong></span>
+                <span><strong>{% if test.confirmed %}Confirmed{% else %}Not Confirmed{% endif %}</strong></span>
+                <div class="buttons">
+                <button class="list-button"><a class="list-links" href="{% url 'request_test_detail' analysis_request_id=analysis_request.id test_id=test.id %}">View Details</a></button>
+                </div>
+            </li> 
+            {% comment %} <li>
+                <strong>{{ test.test_offered.name }}</strong> - {% if test.confirmed %}Confirmed{% else %}Not Confirmed{% endif %}
+                <a href="{% url 'request_test_detail' analysis_request_id=analysis_request.id test_id=test.id %}">View Details</a>
+            </li> {% endcomment %}
+        {% endfor %}
+    </ul>
+    {% if analysis_request.all_tests_confirmed and not analysis_request.status == "finished" and analysis_request.tests.count != 0 %}
+    <a href="{% url 'request_detail' analysis_request_id=analysis_request.id %}"><button class="formbold-btn">Mark As Finished</button>
+    </a>
+    {% else %}
+    <a href="{% url 'request_detail' analysis_request_id=analysis_request.id %}" > <button class="formbold-btn"> Go Back</button></a>
+    {% endif %}
+    
+    {% if not analysis_request.status == "finished" %}
+    <a href="{% url 'request_test_add' analysis_request_id=analysis_request.id %}" ><button class="formbold-btn">Add Test</button></a>
+    {% endif %}
+
+    
+
+</div>
+
+{% endblock main %}

@@ -1,0 +1,33 @@
+{% extends 'receptionist/receptionist.html' %}
+{% load static %}
+
+{% block css_2 %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+{% endblock css_2 %}
+{% block css_3 %}
+{% endblock css_3 %}
+{% block main %}
+
+<div class="Container">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        
+        <div class="left">
+            <div class="profile">
+                <img class="profile-pic"id="profile-preview" src="{{ user.receptionist.profile_pic.url }}" alt="Profile Picture">
+                
+            
+           {% include 'main_home/profile_base.html' %}
+                
+        </div>            
+
+    </form>
+</div>
+{% endblock main %}
+
+{% block scripts_2 %}
+
+{% include 'main_home/profile_base_scripts.html' %}
+
+{% endblock scripts_2 %}

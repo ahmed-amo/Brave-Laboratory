@@ -1,0 +1,68 @@
+{% extends 'receptionist/receptionist.html' %}
+{% load static %}
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+{% endblock css_2 %}
+{% block main %}
+<div class="Container">
+
+    <div class="header ">
+        <div class="search">
+            <form class="search-bar" method="post" >
+                {% csrf_token %}
+                <button type="submit" name="search">
+                    <span class="material-icons search-icon">
+                        search
+                        </span>
+                </button>
+                <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+                
+            </form>
+        </div>
+        
+    </div>
+
+    {% if complaints %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Complaints</h3>
+        </div>  
+
+        <div class="userscontianercl">
+        <div class= "scrollcl">
+        <ul>
+            {% for complaint in complaints %}
+                <li class="app1">
+                    <span><strong>Complaint #{{ complaint.id }}</strong></span>
+                    <span><strong>{{ complaint.date }}</strong></span>
+                    <div class="buttons">
+                        <button class="list-button"><a class="list-links" href="{% url 'complaint_detail' complaint.id %}">View Details</a></button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        </div>
+    </div> 
+    </div> 
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Complaints</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Complaints found</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+</div>
+{% endblock main %}

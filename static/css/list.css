@@ -1,0 +1,251 @@
+
+.Search {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    width: 25%;
+}
+
+.input {
+    width: 100%;
+    height: 55px;
+    line-height: 28px;
+    padding: 0 1rem;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #E4E6EB;
+    color: #0d0c22;
+    transition: .3s ease;
+}
+
+.input::placeholder {
+    color: #9e9ea7;
+}
+
+.input:focus,
+.input:hover {
+    outline: none;
+    border-color: #00748c;
+    background-color: #fff;
+    box-shadow: 0 0 0 2px #00748c59;
+}
+
+.icon {
+    position: absolute;
+    left: 1rem;
+    fill: #9e9ea7;
+    width: 1rem;
+    height: 1rem;
+}
+
+.list-button {
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 0;
+    background-color: white;
+    border: solid 1px #00748c50;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: all .5s ease;
+}
+
+.list-button:hover {
+    background-color: #00748c;
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+}
+
+.list-button:active {
+    background-color: #00748c;
+    color: hsl(0, 0%, 100%);
+    box-shadow: #00748c;
+    transition: 100ms;
+}
+
+.buttons {
+    border-left: 2px black solid;
+    padding-inline: 2rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    list-style: none;
+    margin: 0.5rem;
+}
+
+.app1 {
+    margin: 1rem;
+    background-color: #E4E6EB;
+    border-radius: 20px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    list-style: none;
+    padding-left: 2rem !important ; 
+}
+
+.empty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.nurse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.nurse-with-line::before {
+    content: "";
+    border-left: 2px solid black; /* Adjust the line color and thickness as desired */
+    height: 100%; /* Adjust the line height to match the height of the div */
+    position: absolute;
+    left: 0;
+  }
+
+.list-links{
+    all:unset;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.userlist {
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: white;
+
+}
+
+.userscontianer{
+    height: 67vh;
+    border-left: 3px solid #00748c50;
+    border-right: 3px solid #00748c50;
+    border-bottom: 3px solid #00748c50;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.infoheader{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2vh;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #00748c;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.scroll{
+    
+        background-color: #fff;
+        padding: 10px;
+        height: 62vh;
+        overflow-y: scroll;
+        background-color: #fff;
+}
+
+.infoheader1{
+padding-left: 3%;
+}
+.infoheader2{
+padding-left: -2%;
+}
+.infoheader3{
+padding-right: 8%;
+}
+.infoheader4{
+padding-right: 8%;
+}
+
+
+
+
+
+
+
+
+
+
+.userlistcl {
+    font-size: 16px;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+
+
+.userscontianercl  {
+    height: 50vh;
+    border-left: 3px solid #00748c50;
+    border-right: 3px solid #00748c50;
+    border-bottom: 3px solid #00748c50;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+   
+}
+
+
+
+.infoheadercl{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1vh;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #00748c;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+.scrollcl{
+    
+        background-color: #fff;
+        padding: 10px;
+        height: 45vh;
+        overflow-y: scroll;
+        background-color: #fff;
+}
+

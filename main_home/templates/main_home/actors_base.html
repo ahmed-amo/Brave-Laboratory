@@ -1,0 +1,125 @@
+{% extends 'main_home/base.html' %}
+{% load static %}
+    
+{% block css %}
+    
+        <link rel="stylesheet" href="{% static 'css/resources/google_icons.css' %}">
+        <link rel="stylesheet" href="{% static 'css/resources/font-awesome.all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/actors.css' %}" />
+   
+
+    
+{% endblock css %}
+
+{% block header %}{% endblock header %}
+    
+{% block content %}
+
+<style>
+    .smaller-text{
+        font-size: 12px;
+        margin-left: 10px;
+        color: #00748c;
+        text-transform: capitalize;
+    }
+</style>
+    <div class="container">
+        
+        <header>
+            <div class="wlc">
+                <h1>Welcome Back&nbsp;<span class="smaller-text">{{user.username}}</span></h1>
+            </div>
+            <div class="Left">
+                
+                <ul class="DROPS">
+                    {% if user.groups.first.name == 'client' %}
+            
+                    {% comment %} <li><a href="#"><span class="material-icons notifications">notifications</span></a></li> {% endcomment %}
+                    <li class="profile-header"><a class="profile-pic-container" onclick="showElement()"><img class="profile-pic" alt="profile_pic" src="{{ user.client.profile_pic.url }}"></img><i class="fa-solid fa-chevron-down"></i></a>
+                    <ul id="myElement">
+                    <a href="{% url 'profile_update' %}" class="drop-down"><li><span class="material-icons">person</span>Profile</li></a>
+                    <a href="{% url 'profile_settings' %}" class="drop-down"><li><span class="material-icons">settings</span>Settings</li></a>
+                    <a href="{% url 'profile_help' %}" class="drop-down"><li><span class="material-icons">help</span>Help</li></a>
+                    <a href="{% url 'profile_contact' %}" class="drop-down"><li><span class="material-icons">call</span>Contact</li></a>
+                                        
+                    {% elif user.groups.first.name == 'nurse' %}
+                    
+                    {% comment %} <li><a href="#"><span class="material-icons notifications">notifications</span></a></li> {% endcomment %}
+                    <li class="profile-header"><a class="profile-pic-container" onclick="showElement()"><img class="profile-pic" alt="profile_pic" src="{{ user.nurse.profile_pic.url }}"></img><i class="fa-solid fa-chevron-down"></i></a>
+                    <ul id="myElement">
+                    <a href="{% url 'profile_update' %}" class="drop-down"><li><span class="material-icons">person</span>Profile</li></a>
+                    <a href="{% url 'profile_settings' %}" class="drop-down"><li><span class="material-icons">settings</span>Settings</li></a>
+                                        
+                    {% elif user.groups.first.name == 'receptionist' %}
+                    
+                    {% comment %} <li><a href="#"><span class="material-icons notifications">notifications</span></a></li> {% endcomment %}
+                    <li class="profile-header"><a class="profile-pic-container" onclick="showElement()"><img class="profile-pic" alt="profile_pic" src="{{ user.receptionist.profile_pic.url }}"></img><i class="fa-solid fa-chevron-down"></i></a>
+                    <ul id="myElement">
+                    <a href="{% url 'profile_update' %}" class="drop-down"><li><span class="material-icons">person</span>Profile</li></a>
+                    <a href="{% url 'profile_settings' %}" class="drop-down"><li><span class="material-icons">settings</span>Settings</li></a>
+                                        
+                                    
+                    {% elif user.groups.first.name == 'auditor' %}
+                    
+                    {% comment %} <li><a href="#"><span class="material-icons notifications">notifications</span></a></li> {% endcomment %}
+                    <li class="profile-header"><a class="profile-pic-container" onclick="showElement()"><img class="profile-pic" alt="profile_pic" src="{{ user.auditor.profile_pic.url }}"></img><i class="fa-solid fa-chevron-down"></i></a>
+                    <ul id="myElement">
+                    <a href="{% url 'profile_update' %}" class="drop-down"><li><span class="material-icons">person</span>Profile</li></a>
+                    <a href="{% url 'profile_settings' %}" class="drop-down"><li><span class="material-icons">settings</span>Settings</li></a>
+                    
+                    {% elif user.groups.first.name == 'admin_user' %}
+                    
+                    {% comment %} <li><a href="#"><span class="material-icons notifications">notifications</span></a></li> {% endcomment %}
+                    <li class="profile-header"><a class="profile-pic-container" onclick="showElement()"><img class="profile-pic" alt="profile_pic" src="{{ user.adminuser.profile_pic.url }}"></img><i class="fa-solid fa-chevron-down"></i></a>
+                    <ul id="myElement">
+                    <a href="{% url 'profile_update' %}" class="drop-down"><li><span class="material-icons">person</span>Profile</li></a>
+                    <a href="{% url 'profile_settings' %}" class="drop-down"><li><span class="material-icons">settings</span>Settings</li></a>
+                    
+                    {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+        </header>
+        
+        <div class="Main">
+            {% block main %}{% endblock main %}
+        </div>
+    </div>
+    <div class="nav-header">
+        <a class="logo" href="{% url user.groups.first.name %}">
+            <img alt='logo' src="{% static 'img/logo.png' %}">
+            <span><strong>Brave Laboratory</strong></span>
+        </a>
+    </div>
+    <nav>
+        <ul>
+            {% block sidebar %}{% endblock sidebar %}
+            <li class="end">
+                <a href='{% url 'logout' %}'>
+                    <span class="material-icons emoji">logout</span>
+                    <span class="nav-item">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    </section>
+
+ 
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/resources/font-awesome.all.js' %}"></script>
+<script>
+    function showElement() {
+        var element = document.getElementById("myElement");
+        if (element.style.display === "block") {
+            element.style.display = "none";
+        } else {
+            element.style.display = "block";
+        }
+    }
+</script>
+
+{% endblock scripts %}

@@ -1,0 +1,152 @@
+{% extends 'client/client.html' %}
+{% load static %}
+
+{% block main %}
+<div class="Container">
+
+
+    <div class="header ">
+        <div class="search">
+            <form class="search-bar" method="post" >
+                {% csrf_token %}
+                <button type="submit" name="search">
+                    <span class="material-icons search-icon">
+                        search
+                        </span>
+                </button>
+                <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+                
+            </form>
+        </div>
+
+        <div class="header ">
+            <div class="search">
+               
+            </div>
+            <div class="nurse">
+            <a href="{% url "client_result_list" %}?state=unpaid">
+                <button class="list-button filter">
+                    <span>Unpaid</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+            <a href="{% url "client_result_list" %}?state=paid">
+                    <button class="list-button filter">
+                    <span>Paid</span>
+                    <span class="material-icons">filter_list</span>
+                </button>
+            </a>
+                
+            </div>
+            
+        </div>
+    
+
+
+        
+        <div class="nurse">
+            <a href="{% url "client_result_list" %}?date={{sort_date}}&state={{state}}">
+                <button class="list-button filter">
+                    <span>Date</span>
+                    <span class="material-icons">sort</span>
+                </button>
+            </a>
+        </div>
+          
+    </div>
+
+    
+
+
+    {% if invoices is not None %}
+    {% if invoices %}
+    <div class="userlistcl">
+            <div class="infoheadercl">
+                <h3>Paid Invoices</h3>
+            </div>   
+
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul>
+                {% for invoice in invoices %}
+                <li class="app1">
+                    <span><strong>Appointment #{{ invoice.report.test_result.request.appointment.id }}</strong></span>
+                    <span><strong>{{ invoice.creation_time }}</strong></span>
+                    <span><strong>Total Price: {{ invoice.total_price }}</strong></span>
+                    <div class="buttons">
+                        <button class="list-button"><a class="list-links" href="{% url 'client_result_detail' invoice.id  %}">View Details</a></button>
+                    </div>
+                </li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Paid Invoices</h3>
+            </div>     
+        <div class="userscontianercl">
+            <div class= "scrollcl">
+                <ul class="lists">
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Paid Invoices Found</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div> 
+    {% endif %}
+    {% endif %}
+
+
+        {% if unpaid_invoices is not None %}
+        {% if unpaid_invoices %}
+      
+        <div class="userlistcl">
+                    <div class="infoheadercl">
+                        <h3>Unpaid Invoices</h3>
+                    </div>   
+
+            <div class="userscontianercl">
+                <div class= "scrollcl">
+                    <ul>
+                        {% for invoice in unpaid_invoices %}
+                        <li class="app1">
+                            <span><strong>Appointment #{{ invoice.report.test_result.request.appointment.id }}</strong></span>
+                            <span><strong>{{ invoice.creation_time }}</strong></span>
+                            <span><strong>Total Price: {{ invoice.total_price }}</strong></span>
+                            <div class="buttons">
+                                <button class="list-button"><a class="list-links" href="{% url 'online_pay' invoice.id  %}">Online Pay</a></button>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div> 
+        </div>      
+        {% else %}
+        <div class="userlistcl">
+            <div class="infoheadercl">
+                <h3>Unpaid Invoices</h3>
+                </div>     
+            <div class="userscontianercl">
+                <div class= "scrollcl">
+                    <ul class="lists">
+                        <li class="app1">
+                            <span><strong></strong></span>
+                            <span><strong>No Unpaid Invoices Found</strong></span>
+                            <span><strong></strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div> 
+        </div> 
+        {% endif %}   
+        
+        {% endif %}
+</div>
+{% endblock main %}

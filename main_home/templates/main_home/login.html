@@ -1,0 +1,70 @@
+{% extends 'main_home/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/login_register.css' %}">
+    
+    <style>
+        body{
+            background-image:url("{% static 'img/signupback.png' %}");
+        }
+
+        .header{
+            height: auto !important;
+        }
+    </style>
+{% endblock css %}
+
+{% block header %}
+    <section class="header">
+        <nav>
+            <a href="{% url 'home' %}"><img alt="Brave Lab Logo" src="{% static 'img/download.png' %}"></a>
+        </nav>
+    {% endblock header %}
+
+{% block content %}
+    </section>
+
+    <div class="login-Container">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="email field">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            
+            {% if form.errors %}
+                <div class="login-errors">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif%}
+
+            <div class="password field">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+
+            <input class="login-button" type="submit" value="Login">
+        </form>
+
+        <p>
+            <a href="{% url 'password_reset' %}" class="links">Forgot Password?</a>
+        </p>
+<!--
+        <div class="remember-me">
+            <input type="Checkbox">
+            <label>Remember Me</label>
+        </div>
+-->
+        <p class="account-redirect">
+            You Don't have an account?
+            <a href="{% url 'register' %}" class="links small">Sign Up</a>
+        </p>
+    </div>
+{% endblock content %}
+
+

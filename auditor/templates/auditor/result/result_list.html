@@ -1,0 +1,178 @@
+{% extends 'auditor/auditor.html' %}
+{% load static %}
+{% block css_2 %}
+
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+{% endblock css_2 %}
+{% block main %}
+
+<div class="Container">
+    <h1>Test Results</h1>
+    <div class="header ">
+        <div class="search">
+            <form class="search-bar" method="post" >
+                {% csrf_token %}
+                <button type="submit" name="search">
+                    <span class="material-icons search-icon">
+                        search
+                        </span>
+                </button>
+                <input class="search-bar-input" id="search" name="search" placeholder="Search" required="" type="text">
+                
+            </form>
+        </div>
+        <div class="nurse">
+            <a href="{% url "test_result_list" %}?date={{sort_date}}&urgency={{sort_urgency}}&nurse={{sort_nurse}}&date_sort=True&state={{state}}">
+                <button class="list-button filter">
+                    <span>Date</span>
+                    <span class="material-icons">sort</span>
+                </button>
+            </a>
+            <a href="{% url "test_result_list" %}?date={{sort_date}}&urgency={{sort_urgency}}&nurse={{sort_nurse}}&urgency_sort=True&state={{state}}">
+            <button class="list-button filter">
+                <span>Urgency</span>
+                <span class="material-icons">sort</span>
+            </button>
+            </a>
+            <a href="{% url "test_result_list" %}?date={{sort_date}}&urgency={{sort_urgency}}&nurse={{sort_nurse}}&nurse_sort=True&state={{state}}">
+            <button class="list-button filter">
+                <span>Nurse</span>
+                <span class="material-icons">sort</span>
+            </button>
+            </a>
+        </div>
+        
+        
+    </div>
+
+    <div class="header ">
+        <div class="search">
+           
+        </div>
+        <div class="nurse">
+        <a href="{% url "test_result_list" %}?state=unapproved">
+            <button class="list-button filter">
+                <span>Unapproved</span>
+                <span class="material-icons">filter_list</span>
+            </button>
+        </a>
+        <a href="{% url "test_result_list" %}?state=approved">
+            <button class="list-button filter">
+                <span>Approved</span>
+                <span class="material-icons">filter_list</span>
+            </button>
+        </a>
+            
+        </div>
+        
+    </div>
+        
+    {% if unapproved_results is not None %}
+    {% if unapproved_results %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Unapproved Test Results</h3>
+        </div>
+
+        <div class="userscontianercl">
+            <div class="scrollcl">
+                <ul>
+                    {% for result in unapproved_results %}
+                    <li class="app1">
+                        <span><strong>Appointment #{{ result.request.appointment.id }}</strong></span>
+                        <span><strong>Nurse: {{ result.request.nurse.user.username }}</strong></span>
+                        <span><strong>{{ result.creation_time }}</strong></span>
+                        <span><strong>
+                            {% if result.request.appointment.urgent %}
+                                Urgent
+                            {% else %}
+                                Normal
+                            {% endif %}
+                        </strong></span>
+
+                        <div class="buttons">
+                            <button class="list-button"><a class="list-links" href="{% url 'test_result_detail' result.id %}">View Details</a></button>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Unapproved Test Results</h3>
+        </div>
+
+        <div class="userscontianercl">
+            <div class="scrollcl">
+                <ul>
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Tests Available</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if approved_results is not None %}
+    {% if approved_results %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Approved Test Results</h3>
+        </div>
+
+        <div class="userscontianercl">
+            <div class="scrollcl">
+                <ul>
+                    {% for result in approved_results %}
+                        <li class="app1">
+                            <span><strong>Appointment #{{ result.request.appointment.id }}</strong></span>
+                            <span><strong>Nurse: {{ result.request.nurse.user.username }}</strong></span>
+                            <span><strong>{{ result.creation_time }}</strong></span>
+                            <span><strong>
+                                {% if result.request.appointment.urgent %}
+                                    Urgent
+                                {% else %}
+                                    Normal
+                                {% endif %}
+                            </strong></span>
+                            <div class="buttons">
+                                <button class="list-button"><a class="list-links" href="{% url 'test_result_detail' result.id %}">View Details</a></button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="userlistcl">
+        <div class="infoheadercl">
+            <h3>Approved Test Results</h3>
+        </div>
+
+        <div class="userscontianercl">
+            <div class="scrollcl">
+                <ul>
+                    <li class="app1">
+                        <span><strong></strong></span>
+                        <span><strong>No Tests Available</strong></span>
+                        <span><strong></strong></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock main %}

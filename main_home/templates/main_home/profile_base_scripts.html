@@ -1,0 +1,30 @@
+
+
+<script>
+
+    // Get the file input element
+    const fileInput = document.getElementById('id_profile_pic');
+    
+    // Get the profile preview image element
+    const profilePreview = document.getElementById('profile-preview');
+    
+    // Add an event listener for file input change
+    fileInput.addEventListener('change', function() {
+        // Get the selected file
+        const file = fileInput.files[0];
+    
+        // Create a FileReader object
+        const reader = new FileReader();
+    
+        // Define the callback function for when the file is loaded
+        reader.onload = function(e) {
+            // Set the source of the profile preview image to the loaded file data
+            profilePreview.src = e.target.result;
+        };
+    
+        // Read the selected file as a data URL
+        reader.readAsDataURL(file);
+    });
+
+</script>
+    

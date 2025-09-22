@@ -1,0 +1,80 @@
+{% extends 'nurse/nurse.html' %}
+{% load static %}
+{% block css_3 %}
+
+<link rel="stylesheet" href="{% static 'css/form_create.css' %}">
+<link rel="stylesheet" href="{% static 'css/button_style.css' %}">
+<style>
+  .Container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    border: 3px solid #00748c50;
+    border-radius: 10px;
+    background-color: #fff;
+    animation: fade-in 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 20px;
+        width: 400px;
+    }
+
+    .number{
+      width: 90%;
+    }
+</style>
+{% endblock css_3 %}
+{% block main %}
+  <div class="Container">
+    <h1>Add Blood Sample</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      <label class='formbold-form-label' for="id_client">Client:</label>
+      {{ form.client}}
+      <label class='formbold-form-label' for="id_blood_type">Blood type:</label>
+      {{ form.blood_type}}
+      <label class='formbold-form-label' for="id_quantity">Quantity (mL):</label>
+      {{ form.quantity}}
+      <label class='formbold-form-label' for="id_blood_bank">Blood bank:</label>
+      {{ form.blood_bank}}
+      <button class="formbold-btn" type="submit" name="add">Add</button>
+    </form>
+  </div>
+{% endblock %}
+
+{% block scripts_3 %}
+  <script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+  {% if blood_added %}
+      <script>
+        Swal.fire({
+          title: 'Success !',
+          text: '{{ blood_added }}',
+          icon: 'success',
+          confirmButtonText: 'Confirm'
+        })
+      </script>
+  {% endif %}
+
+  <script>
+    var inputElements = document.querySelectorAll('select');
+  
+  for (var i = 0; i < inputElements.length; i++) {
+    inputElements[i].classList.add('formbold-form-input');
+  }
+    var inputElementsa = document.querySelectorAll('input');
+  
+  for (var i = 0; i < inputElementsa.length; i++) {
+    inputElementsa[i].classList.add('formbold-form-input');
+    inputElementsa[i].classList.add('number');
+  }
+  
+  </script>
+{% endblock %}

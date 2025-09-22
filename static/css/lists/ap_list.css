@@ -1,0 +1,22 @@
+.app1 .buttons{
+    width: 260px;
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+}
+
+.header .book
+{
+    width: 225px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header .book a {
+    width: 225px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

@@ -1,0 +1,17 @@
+hypertension 
+
+
+heart_disease,
+
+smoking_history,'never': 0.0
+'No Info': 1.0
+'former': 2.0
+'not current': 3.0
+'ever': 4.0
+'current': 5.0
+
+bmi,
+
+HbA1c_level,
+
+blood_glucose_level

@@ -1,0 +1,311 @@
+{% extends 'main_home/actors_base.html' %}
+{% load static %}
+{% block css_3 %}
+
+<style>
+    .con {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+    }
+
+    .grid-item {
+        background-color: #00748c14;
+        padding: 20px 15px 30px 20px;
+        margin-right: 10px;
+        text-align: center;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .double-width {
+        grid-column: span 2;
+    }
+
+    .row-1 {
+        height: 140px;
+    }
+
+    .row-2 {
+        height: 280px;
+    }
+
+    .box-1 ,
+    .box-2,
+    .box-3{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .row-container {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .sub-container {
+        font-family: 'Roboto',sans-serif ! important;
+        margin: 0 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .icon {
+        font-size: 32px;
+        color: #00748c;
+    }
+    .icon span {
+        font-size: 32px;
+        margin-top: 10px;
+        color: #00748c;
+    }
+
+    .sub-header {
+        font-family: 'Roboto', sans-serif ! important;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .description {
+        font-family: 'Roboto', sans-serif ! important;
+        font-size: 10px;
+        color: #555;
+    }
+
+    .heading {
+        font-size: 28px;
+        font-weight: bold;
+        padding-left: 8px;
+        font-family: 'Roboto', sans-serif ! important;
+    }
+
+    .fa-money-check-dollar ,
+    .fa-face-frown,
+    .fa-user{
+        font-size: 40px;
+    }
+
+    .right{
+      margin-left: auto;
+      margin-right:20px;
+    }
+
+    
+</style>
+{% endblock css_3 %}
+{% block main %}
+<div class="Container">
+    <div class="con">
+        <div class="grid-container">
+            <div class="grid-item row-1 box-1">
+                <div class="row-container">
+                    <div class="sub-container">
+                        <div class="icon"><i class="fa-solid fa-money-check-dollar"></i></div>
+                    </div>
+                    <div class="sub-container">
+                        <div class="sub-header">Total Income</div>
+                        <div class="description">${{monthly_revenue}} Monthly Revenue</div>
+                    </div>
+                    <div class="sub-container right">
+                        <div class="icon"><span class="material-icons">moving</span></div>
+                    </div>
+                </div>
+                <div class="row-container">
+                    <div class="heading">${{total_income}}</div>
+                </div>
+            </div>
+            <div class="grid-item row-1 box-2">
+                <div class="row-container">
+                    <div class="sub-container">
+                        <div class="icon"><i class="fa-solid fa-user"></i></div>
+                    </div>
+                    <div class="sub-container">
+                        <div class="sub-header">Clients</div>
+                        <div class="description">{{new_client_count}} New clients in the last 7 days</div>
+                    </div>
+                    <div class="sub-container right">
+                        <div class="icon"><span class="material-icons"><span class="material-icons">moving</span></div>
+                    </div>
+                </div>
+                <div class="row-container">
+                    <div class="heading">{{client_count}}</div>
+                </div>
+            </div>
+            <div class="grid-item row-1 box-3">
+
+                <div class="row-container">
+                    <div class="sub-container">
+                        <div class="icon"><i class="fa-regular fa-face-frown"></i></div>
+                    </div>
+                    <div class="sub-container">
+                        <div class="sub-header">Complaints</div>
+                        <div class="description">{{complaints_last_7_days}} this week</div>
+                    </div>
+                    <div class="sub-container right">
+                        <div class="icon"><span class="material-icons">moving</span></div>
+                    </div>
+                </div>
+                <div class="row-container">
+                    <div class="heading">{{total_complaints}}</div>
+                </div>
+            </div>
+            <div class="grid-item double-width row-2 box-4">
+                <canvas id="LineChart"></canvas>
+            </div>
+            <div class="grid-item row-2 box-5">
+                <canvas id="DoughnutChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock main %}
+
+
+{% block sidebar %}
+
+<li><a href={% url 'auditor' %}><span class="material-icons X">layers</span> <span class="nav-item">Home</span></a></li>
+<li><a href={% url 'chat_rooms' %}><span class="material-icons X">chat</span><span class="nav-item">Messages</span></a>
+</li>
+<li><a href={% url 'auditor_request_list' %}><span class="material-icons X">list_alt</span><span
+            class="nav-item">Analysis Requests</span></a></li>
+<li><a href={% url 'test_result_list' %}><span class="material-icons X">verified</span><span class="nav-item">Test
+            Results</span></a></li>
+<li><a href={% url 'report_list' %}><span class="material-icons X">list</span><span class="nav-item">Review
+            Reports</span></a></li>
+
+
+{% endblock sidebar %}
+
+{% block scripts_2 %}
+
+<script src="{% static 'js/resources/sweetalert2.all.min.js'%}"></script>
+
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            Swal.fire({
+                title: {% if message.tags == 'success' %}'Success!'{% else %}'Error!'{% endif %},
+                text: '{{ message }}',
+                icon: {% if message.tags == 'success' %}'success'{% else %}'error'{% endif %},
+                confirmButtonText: 'Confirm'
+            });
+        </script>
+    {% endfor %}
+{% endif %}
+
+
+<script>
+    var path = window.location.pathname;
+    var links = document.querySelectorAll('nav ul li a');
+
+    links.forEach(function (link) {
+        var href = link.getAttribute('href');
+
+        // Check if the current path starts with the href
+        if (path.startsWith(href)) {
+            // Add the "active" class to the parent <li> element
+            link.parentElement.classList.add('active');
+        }
+    });
+</script>
+{% endblock scripts_2 %}
+
+{% block scripts_3 %}
+
+<script src="{% static 'js/resources/chart.js' %}"></script>
+
+<script>
+    const ctx = document.getElementById('DoughnutChart');
+    const test_labels =[];
+    const chart_data =[];
+
+    {% for test in top_tests  %}
+        test_name = '{{test.test_offered__name}}';
+        test_count = parseInt('{{test.count}}');
+        console.log('{{test.count}}');
+        
+        test_labels.push(test_name);
+        chart_data.push(test_count);
+    {% endfor %}
+        
+    console.log(chart_data[0]);
+    const data = {
+        labels: test_labels,
+        datasets: [{
+            label: 'Tests',
+            data: chart_data,
+            backgroundColor: [
+                'rgb(60, 127, 125)',
+                'rgb(40, 147, 140)',
+                'rgb(20, 167, 165)'
+            ],
+            hoverOffset: 4
+        }]
+    };
+
+    const config = {
+        type: 'doughnut',
+        data: data,
+    };
+
+    new Chart(ctx, config);
+
+</script>
+
+<script>
+    const ctx2 = document.getElementById('LineChart');
+    const month_labels =[];
+    const app_data =[];
+
+    {% for app in app_count  %}
+        app_month = '{{app.month}}';
+        app_count = '{{app.count}}';
+        
+        month_labels.push(app_month);
+        app_data.push(app_count);
+    {% endfor %}
+
+    const data2 = {
+        labels: month_labels,
+        datasets: [{
+            label: 'Appointments',
+            data: app_data,
+            fill: false,
+            borderColor: 'rgb(20, 167, 165)',
+            tension: 0.1
+        }]
+    };
+
+    const config2 = {
+        type: 'line',
+        data: data2,
+    };
+
+    new Chart(ctx2, config2);
+
+
+
+</script>
+
+
+
+{% endblock scripts_3 %}
+
+

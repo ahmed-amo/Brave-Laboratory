@@ -1,0 +1,61 @@
+{% extends 'auditor/auditor.html' %}
+{% load static %}
+
+{% block css_3 %}
+<link rel="stylesheet" href="{% static 'css/detail_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/button_style.css' %}">
+
+<style>
+    .formbold-btn{
+        margin: 10px 0;
+    }
+    .tests{
+      text-align: left;
+    }
+</style>
+{% endblock css_3 %}
+
+{% block main %}
+  <div class="Container">
+    <div class="left-section">
+    <h1>Analysis Request Detail</h1>
+
+    <h2>Request ID: {{ analysis_request.id }}</h2>
+
+    <p>Date of Creation: {{ analysis_request.creation_time }}</p>
+    <p>Client: {{ analysis_request.appointment.client.user.first_name }} {{ analysis_request.appointment.client.user.last_name }}</p>
+    <p>Nurse: {{analysis_request.nurse}}</p>
+    <p>Blood Type: {{ analysis_request.appointment.client.bloodbank.blood_type }}</p>
+    <!-- Display other client information as needed -->
+
+    <p>Duration: {{ analysis_request.duration }}</p>
+
+    <h2>Requested Tests</h2>
+    <ul class="tests">
+      {% for test in analysis_request.appointment.tests_requested.all %}
+        <li>
+          <strong>-{{ test }}</strong>
+        </li>
+      {% endfor %}
+    </ul>
+    </div>
+    <div class="right-section">
+    {% if analysis_request.appointment.document %}
+      <p>Document:</p>
+      <a href="{{ analysis_request.appointment.document.url }}" target="_blank"><img src="{{ analysis_request.appointment.document.url }}" width="200" /></a>
+    {% else %}
+      <p>No document provided.</p>
+    {% endif %}
+
+    <p>Status: {{ analysis_request.get_status_display }}</p>
+
+    {% if analysis_request.get_status_display == 'Pending' %}
+      <form method="post" action="{% url 'change_nurse' analysis_request.id %}">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button type="submit" class="formbold-form-input" name="change">Change Nurse</button>
+      </form>
+    {% endif %}
+    </div>
+  </div>
+{% endblock %}

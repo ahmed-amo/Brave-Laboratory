@@ -1,0 +1,80 @@
+.Container {
+    padding: 20px 50px;
+}
+.header-detail{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom:2px solid #267ca670;
+}
+.header-detail h1{
+    font-size:1.6rem;
+}
+.infos{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    border-bottom: 2px solid #267ca670;
+}
+.client ,.work ,.payments{
+    padding:1rem;
+}
+.client ,.work ,.payments p{
+    font-size: 16px;
+}
+.client,.work {
+    border-right:2px solid #267ca670;
+}
+.client {
+    border-left:2px solid #267ca670;
+}
+.payments {
+    border-right:2px solid #267ca670;
+}
+.payments p{
+    text-align: end;
+}
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.desc{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.desc label{
+    font-size:20px;
+}
+.formbold-btn {
+    text-align: center;
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 14px 32px;
+    border: none;
+    font-weight: 600;
+    background-color: #267ca6;
+    color: white;
+    width: 250px;
+    cursor: pointer;
+}
+.formbold-btn:hover {
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+.buttons-links{
+    margin:10px;
+    padding:1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.cont{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 360px;
+}

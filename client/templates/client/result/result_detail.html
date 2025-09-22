@@ -1,0 +1,111 @@
+{% extends 'client/client.html' %}
+{% load static %}
+
+{% block css_3 %}
+<link rel="stylesheet" href="{% static 'css/pdf.css' %}">
+<link rel="stylesheet" href="{% static 'css/detail_style.css' %}">
+<style>
+    .Container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        border: 3px solid #00748c50;
+        border-radius: 10px;
+        background-color: #fff;
+        animation: fade-in 1s ease-out;
+    }
+
+    .Container button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        font-size: 16px;
+    }
+
+    .Container button:hover {
+        background-color: #0056b3;
+    }
+
+    .Container .button-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .Container .download-button,
+    .Container .view-button {
+        display: inline-block;
+        padding: 10px 20px;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        font-size: 16px;
+    }
+
+
+    .Container a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .test{
+        text-align: left;
+    }
+
+</style>
+{% endblock css_3 %}
+
+
+
+{% block main %}
+
+
+<div class="Container">
+    <div class="left-section">
+    {% if invoice.payment_status %}
+    <h1>Test Results - Invoice #{{ invoice.id }}</h1>
+    <p>Date: {{ invoice.creation_time }}</p>
+    <p>Approved: {% if test_result.approved %}Yes{% else %}No{% endif %}</p>
+    <p>Duration: {{ test_result.duration }}</p>
+    <p>Total Price: {{ invoice.total_price }}</p>
+
+    <h3>Invoice:</h3>
+    <div class="button-container">
+        <a href="{% url 'pdf_client_invoice' invoice.id %}?download=true" class="download-button">Download PDF</a>
+        <a href="{% url 'pdf_client_invoice' invoice.id %}" target="_blank" class="view-button">View PDF</a>
+    </div>
+
+    <h3>Test Results:</h3>
+    <div class="button-container">
+        <a href="{% url 'pdf_client_results' invoice.id %}?download=true" class="download-button">Download PDF</a>
+        <a href="{% url 'pdf_client_results' invoice.id %}" target="_blank" class="view-button">View PDF</a>
+    </div>
+    </div>
+    <div class="right-section">
+    <h3>Tests:</h3>
+    {% for test in test_request.tests.all %}
+    <div class="test">
+        <h3>{{ test.test_offered.name }}</h3>
+        <p>Description: {{ test.description }}</p>
+        {% for component in test.components.all %}
+        <p>-{{ component.info.name }}: {{ component.value }} {{ component.info.unit }}</p>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    {% else %}
+    <h1>404 Not Found</h1>
+    {% endif %}
+    </div>
+</div>
+{% endblock main %}

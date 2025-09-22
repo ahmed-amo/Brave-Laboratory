@@ -1,0 +1,44 @@
+
+.Container {
+    margin: auto;
+    width: 85%;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+/*new adam */
+    background-color: white;
+    /* margin-bottom: 5% ; */
+}
+
+
+.header.policy{
+    text-align: center;
+    color: white;
+    background-color: #267ca6;
+    width:80%;
+    padding:2rem;
+    border-radius: 25px;
+    margin:2rem;
+    font-size: 0.8rem;
+}
+h1{
+    font-size: 1.8rem;
+}
+p{
+    font-size: 1rem;
+}
+.Writing{
+    text-align: center;
+    width:90%;
+    padding:10px;
+    font-size: 0.8rem;
+}
+.Writing p{
+    margin:10px;
+}
+h5{
+    padding:1rem;
+    font-size:1rem;
+}

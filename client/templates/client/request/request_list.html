@@ -1,0 +1,222 @@
+{% extends 'client/client.html' %}
+{% load static %}
+
+{% block main %}
+<style>
+    .Container {
+        margin: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        animation: fade-in 0.5s;
+        width: 80%;
+      }
+      
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    .progress-bar {
+        width: 750px;
+        margin: 0 auto 40px auto;
+    }
+
+    .progress-meter {
+        padding: 0;
+    }
+
+    ol.progress-meter {
+        list-style-type: none;
+        display: flex; 
+        justify-content: space-between;
+        border: 2px solid #00748c70;
+        padding: 30px 30px 40px 30px;
+        border-radius: 10px;
+    }
+
+    ol.progress-meter li {
+        display: inline-block;
+        text-align: center;
+        text-indent: -19px;
+        height: 36px;
+        width: 98px;
+        font-size: 12px;
+        border-bottom-width: 5px;
+        border-bottom-style: solid;
+        border-radius: 5px;
+    }
+
+    ol.progress-meter li:before {
+        position: relative;
+        float: left;
+        text-indent: 0;
+        left: -webkit-calc(100% - 9.5px);
+        left: -moz-calc(100% - 9.5px);
+        left: -ms-calc(100% - 9.5px);
+        left: -o-calc(100% - 9.5px);
+        left: calc(100% - 9.5px);
+    }
+
+    ol.progress-meter li.finished {
+        font-size: 12px;
+    }
+
+    ol.progress-meter li.finished:before {
+        content: "\2713";
+        height: 19px;
+        width: 19px;
+        line-height: 19px;
+        bottom: -28.175px;
+        border: none;
+        border-radius: 19px;
+    }
+    
+    ol.progress-meter li.finished {
+        color: black;
+        border-bottom-color: yellowgreen;
+    }
+
+    ol.progress-meter li.finished:before {
+        color: white;
+        background-color: yellowgreen;
+    }
+
+    ol.progress-meter li.pending {
+        font-size: 12px;
+    }
+
+    ol.progress-meter li.pending:before {
+        content: "\2B24";
+        font-size: 17.1px;
+        bottom: -26.95px;
+        line-height: 18.05px;
+    }
+
+    ol.progress-meter li.pending {
+        color: silver;
+        border-bottom-color: silver;
+    }
+
+    ol.progress-meter li.pending:before {
+        color: silver;
+    }
+    .small-header{
+        margin-bottom: 10px;
+    }
+</style>
+<div class="Container">
+    
+    {% if appointments %}
+    {% for appointment in appointments %}
+        {% if appointment.status != Appointment.OVERDUE %}
+            {% if not appointment.analysisrequest or not appointment.analysisrequest.testresult.report.invoice %}
+            <div class="progress-bar">
+                <h4 class="small-header">{{appointment}}</h4>
+                    <ol class="progress-meter">
+
+                        <li class="progress-point finished">Booked</li>
+                        {% if appointment.arrived %}
+                        <li class="progress-point finished">Arrived</li>
+                        {% else %}
+                        <li class="progress-point pending">Arrived</li>
+                        {% endif %}
+                        {% if appointment.performed %}
+                        <li class="progress-point finished">Evaluated</li>
+                        {% else %}
+                        <li class="progress-point pending">Evaluated</li>
+                        {% endif %}
+                        
+                        {% if appointment.analysisrequest and appointment.analysisrequest.status != 'pending'  %}
+    
+                            {% if appointment.analysisrequest.status == "finished" %}
+                                <li class="progress-point finished">Working-on</li>
+                                <li class="progress-point finished">Finished</li>
+                            {% else %}
+                                <li class="progress-point finished">Working-on</li>
+                                <li class="progress-point pending">Finished</li>
+                            {% endif %}                                
+                            
+                            {% if appointment.analysisrequest.testresult.approved %}
+                                <li class="progress-point finished">Approved</li>
+                                <li class="progress-point finished">Finalized</li>
+                            {% else %}
+                                <li class="progress-point pending">Approved</li>
+                                <li class="progress-point pending">Finalized</li>
+                            {% endif %}
+    
+                        {% else %}
+                            <li class="progress-point pending">Working-on</li>
+                            <li class="progress-point pending">Finished</li>
+                            <li class="progress-point pending">Approved</li>
+                            <li class="progress-point pending">Finalized</li>
+                        {% endif %}
+                        
+                    </ol>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    
+    {% for appointment in appointments %}
+    {% if appointment.status != Appointment.OVERDUE %}
+            {% if appointment.analysisrequest and appointment.analysisrequest.testresult.report.invoice %}
+                <div class="progress-bar">
+                    <h4 class="small-header">{{appointment}}</h4>
+                    <ol class="progress-meter">
+                        <li class="progress-point finished">Booked</li>
+                        {% if appointment.arrived %}
+                        <li class="progress-point finished">Arrived</li>
+                        {% else %}
+                        <li class="progress-point pending">Arrived</li>
+                        {% endif %}
+                        {% if appointment.performed %}
+                        <li class="progress-point finished">Evaluated</li>
+                        {% else %}
+                        <li class="progress-point pending">Evaluated</li>
+                        {% endif %}
+                        
+                        {% if appointment.analysisrequest  %}
+    
+                                
+                            {% if appointment.analysisrequest.status == "working-on" %}
+                                <li class="progress-point finished">Working-on</li>
+                                <li class="progress-point pending">Finished</li>
+                            {% endif %}
+    
+                            {% if appointment.analysisrequest.status == "finished" %}
+                                <li class="progress-point finished">Working-on</li>
+                                <li class="progress-point finished">Finished</li>
+                            {% endif %}
+                                
+                            
+                            {% if appointment.analysisrequest.testresult.approved %}
+                                <li class="progress-point finished">Approved</li>
+                                <li class="progress-point finished">Finalized</li>
+                            {% else %}
+                                <li class="progress-point pending">Approved</li>
+                                <li class="progress-point pending">Finalized</li>
+                            {% endif %}
+    
+                        {% else %}
+                            <li class="progress-point pending">Working-on</li>
+                            <li class="progress-point pending">Finished</li>
+                            <li class="progress-point pending">Approved</li>
+                            <li class="progress-point pending">Finalized</li>
+                        {% endif %}
+                        
+                    </ol>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% else %}
+        <h3 style="margin:10px 0 ;">No Appointment in Progress</h3>
+    {% endif %}
+
+</div>
+{% endblock main %}

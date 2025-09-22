@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    <style>
+        /* Define your custom CSS styles for the invoice here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .invoice-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .invoice-header {
+            text-align: center;
+        }
+        .invoice-header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .invoice-info {
+            margin-bottom: 20px;
+        }
+        .invoice-info p {
+            margin: 0;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .invoice-table th,
+        .invoice-table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .invoice-total {
+            text-align: right;
+        }
+        .logo{
+            width:160px;
+            height:80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <img class="logo" alt="Brave Lab Logo" src="{{STATIC_ROOT}}/media/pdf/logo_pdf.png">
+            <h1>Invoice</h1>
+        </div>
+        <div class="invoice-info">
+            <p>Invoice ID: #{{invoice.id}}</p>
+            <p>Customer Name: {{ invoice.client.user.first_name }} {{ invoice.client.user.last_name }}</p>
+            <p>Date: {{ invoice.creation_time }}</p>
+        </div>
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Test</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for test in tests %}
+                    <tr>
+                        <td>{{ test.test_offered.name }}</td>
+                        <td>{{ test.description }}</td>
+                        <td>{{ test.test_offered.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" class="invoice-total">Total:</td>
+                    <td>{{ invoice.total_price }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="invoice-footer">
+            <p>Thank you for choosing Brave Lab !</p>
+        </div>
+    </div>
+</body>
+</html>

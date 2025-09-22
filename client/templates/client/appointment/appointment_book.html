@@ -1,0 +1,201 @@
+{% extends 'client/client.html' %}
+{% load static %}
+
+{% block css_3 %}
+<link rel="stylesheet" href="{%static 'css/book.css'%}" />
+<style>
+    .Container {
+        border: 3px solid #00748c50;
+        padding: 20px 0;
+        max-width: 1000px;
+    }
+</style>
+{% endblock css_3 %}
+
+
+{% block main %}
+
+<div class='Container'>
+
+
+    <div class="formbold-main-wrapper">
+        <div class="formbold-form-wrapper">
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="formbold-mb-5">
+                    <label for="id_date" class="formbold-form-label"> Date </label>
+                    <input type="date"  name="date" required id="id_date" class="formbold-form-input" />
+                </div>
+
+                
+                <div class="formbold-mb-5">
+                    <label for="id_tests_requested" class="formbold-form-label"> Tests </label>
+                    <select class="formbold-form-input select-drop" name="tests_requested" id="id_tests_requested" multiple placeholder="Select Test">
+                        <option value="1">Complete Blood Count (CBC)</option>
+                        
+                        <option value="2">Basic Metabolic Panel (BMP)</option>
+                        
+                        <option value="3">Lipid Panel</option>
+                        
+                        <option value="4">Hemoglobin A1C (HbA1c)</option>
+                        
+                        <option value="5">Vitamin D Levels</option>
+                        
+                        <option value="6">Coagulation Panel</option>
+                        
+                        <option value="7">Thyroid Function Tests</option>
+                        
+                        <option value="8">Comprehensive Metabolic Panel (CMP)</option>
+                        
+                        </select>
+                </div>
+
+
+                <div class="formbold-mb-5">
+                    {% if limit %}
+                    <label class="formbold-form-label">{{limit}}</label>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="flex flex-wrap formbold--mx-3">
+                    <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5 w-full">
+
+
+                        </div>
+                    </div>
+
+                    <div class="w-full sm:w-half formbold-px-3">
+                        <div class="formbold-mb-5">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="formbold-mb-5 formbold-pt-3">
+                    <div class="flex flex-wrap formbold--mx-3">
+                        <div class="w-full sm:w-half formbold-px-3">
+                            <div class="formbold-mb-5">
+                            </div>
+                        </div>
+                        <div class="w-full sm:w-half formbold-px-3">
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+
+        <div class="left-2">
+            <div class="formbold-mb-5">
+                <label for="id_description" class="formbold-form-label">Description:</label>
+                <textarea type="text" placeholder="Description..." class="formbold-form-input solo" name="description" id="id_description"> </textarea>
+                
+            </div>
+
+            <label for="name" class="formbold-form-label">Any Thing you want to Send us , click below </label>
+            <div class="cont">
+                <label for="id_document" class="header-1">
+                    <svg id="icon-book" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 15.4806 20.1956 16.8084 19 17.5M7 10C4.79086 10 3 11.7909 3 14C3 15.4806 3.8044 16.8084 5 17.5M7 10C7.43285 10 7.84965 10.0688 8.24006 10.1959M12 12V21M12 12L15 15M12 12L9 15"
+                                stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                        </g>
+                    </svg>
+                    <img hidden src=""  id="uploaded-photo" style="width:230px;height:130px;">
+                    <p style="width:230px;height:40px; display: flex;justify-content: center;align-items: center;">Upload</p>
+                </label>
+                <label for="id_document" class="footer-1">
+                    <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path>
+                            <path d="M18.153 6h-.009v5.342H23.5v-.002z"></path>
+                        </g>
+                    </svg>
+                    <p>Browse Files</p>
+                    <svg fill="#000000" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M15.331 6H8.5v20h15V14.154h-8.169z"></path>
+                            <path d="M18.153 6h-.009v5.342H23.5v-.002z"></path>
+                        </g>
+                    </svg>
+                </label>
+                <input type="file" name="document" accept="image/*" id="id_document" hidden>
+            </div>
+            <div class="button-1">
+                <button type="submit" class="formbold-btn">Book Appointment</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+{% endblock main %}
+
+
+
+
+{% block scripts_3 %}
+<script>
+    const fileInput = document.getElementById("id_document");
+    const photoLabel = document.getElementById("photo-upload-label");
+    const uploadedPhoto = document.getElementById("uploaded-photo");
+    const icon_book = document.getElementById("icon-book");
+
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener("load", (event) => {
+            uploadedPhoto.src = event.target.result;
+            uploadedPhoto.removeAttribute('hidden')
+            icon_book.setAttribute('style','display:None;')
+        });
+
+        reader.readAsDataURL(file);
+    });
+
+</script>
+<script>
+    const selectBtn = document.querySelector(".select-btn"),
+        items = document.querySelectorAll(".item");
+
+
+    selectBtn.addEventListener("click", () => {
+        selectBtn.classList.toggle("open")
+    })
+
+
+    items.forEach(item => {
+        item.addEventListener("click", () => {
+            item.classList.toggle("checked");
+
+            let checked = document.querySelectorAll(".checked"),
+                btnText = document.querySelector(".btn-text");
+
+            if (checked && checked.length > 0) {
+                btnText.innerText = ` ${checked.length} Selected`;
+            } else {
+                btnText.innerText = ` Select Tests`;
+            }
+        });
+    })
+</script>
+
+
+
+{% endblock scripts_3 %}

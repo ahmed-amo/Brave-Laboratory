@@ -1,0 +1,139 @@
+{% extends 'receptionist/receptionist.html' %}
+{% load static %}
+
+{% block main %}
+<link rel="stylesheet" href="{% static 'css/button_style.css' %}">
+<style>
+    .Container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        border: 3px solid #00748c50;
+        border-radius: 10px;
+        background-color: #fff;
+        animation: fade-in 1s ease-out;
+        display: flex;
+        justify-content: space-between;
+      }
+    
+      .Container .left-section {
+        flex-basis: 50%;
+        padding-right: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+      }
+
+      .Container .right-section {
+        flex-basis: 50%;
+      }
+      .Container h1 {
+        color: #111;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+    
+      .Container h3 {
+        color: #222;
+        margin-bottom: 10px;
+      }
+    
+      .Container p {
+        color: #333;
+        margin-bottom: 5px;
+      }
+    
+      .Container ul {
+        list-style: none;
+        padding-left: 20px;
+        margin-top: 0;
+      }
+    
+      .Container li {
+        color: #333;
+        margin-bottom: 5px;
+      }
+    
+      .Container img {
+        max-width: 100%;
+        height: auto;
+        border: 3px solid #00748c50;
+        border-radius: 5px;
+        margin-top: 10px;
+      }
+    
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+    .Container form {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+
+</style>
+<div class="Container">
+    <div class="left-section">
+    <h1>Appointment Details</h1>
+    
+    <h3>Client: {{ appointment.client.user.first_name }} {{ appointment.client.user.last_name }}</h3>
+    <p>Date: {{ appointment.date }}</p>
+    <p>Description: {{ appointment.description }}</p>
+    <p>Tests Price: {{ appointment.payment.tests_fee }}</p>
+    <p>Appointment Fee Status: 
+        {% if appointment.payment.payed_appointment_fee %}
+            Payed 
+            {% else %}
+            UnPayed
+            {% endif %}
+        </p>
+    <p>Tests Fee Status: 
+        {% if appointment.payment.tests_fee and appointment.payment.payed_nurse_tests_fee %}
+        Payed
+        {% else %}
+        UnPayed
+        {% endif %}
+    </p>
+    <p>Total Payments: {{ appointment.payment.total_amount_payed }}</p>
+    </div>
+
+    <div class="right-section">
+        {% if appointment.document %}
+          <p>Document:</p>
+          <a href="{{ appointment.document.url }}" target="_blank"><img src="{{ appointment.document.url }}" width="200" /></a>
+        {% else %}
+          <p>No document provided.</p>
+        {% endif %}
+    
+        <p>Payment Status: {{ appointment.payment_status }}</p>
+    
+        <h3>Status</h3>
+        {% if appointment.cancelled %}
+          <p>Appointment has been cancelled.</p>
+        {% elif appointment.status == appointment.OVERDUE %}
+          <p>Appointment is overdue.</p>
+        {% else %}
+          <p>Appointment is pending.</p>
+        {% endif %}
+      
+    
+    
+    {% if not appointment.arrived %}
+        <form action="{% url 'appointment_confirm' appointment.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="formbold-btn">Mark as Arrived</button>
+        </form>
+    {% else %}
+        <p>Client has arrived</p>
+    {% endif %}
+    </div>
+        
+</div>
+{% endblock main %}
